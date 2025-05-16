@@ -1,98 +1,68 @@
+using CashWiseAPI.Models;
+using CashWiseAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using YourProject.Models;
-using YourProject.Data;
 
-namespace YourProject.Controllers
+namespace CashWiseAPI.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class DashboardController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly DashboardService _service;
+        private readonly ILogger<DashboardController> _logger;
 
-        public DashboardController(ApplicationDbContext context)
+        public DashboardController(DashboardService service, ILogger<DashboardController> logger)
         {
-            _context = context;
+            _service = service;
+            _logger = logger;
         }
+
+        [HttpOptions]
+        public IActionResult Options() => Ok();
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dashboard>>> GetDashboards()
-        {
-            return await _context.Dashboards.Include(d => d.Usuario).ToListAsync();
-        }
+        public ActionResult<List<Dashboard>> Get() => _service.GetAll();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dashboard>> GetDashboard(int id)
+        public ActionResult<Dashboard> Get(int id)
         {
-            var dashboard = await _context.Dashboards
-                .Include(d => d.Usuario)
-                .FirstOrDefaultAsync(d => d.Id == id);
-
-            if (dashboard == null)
-            {
-                return NotFound();
-            }
-
-            return dashboard;
+            var item = _service.Get(id);
+            return item is null ? NotFound() : item;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Dashboard>> CreateDashboard(Dashboard dashboard)
+        public IActionResult Create([FromBody] Dashboard item)
         {
-            _context.Dashboards.Add(dashboard);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetDashboard), new { id = dashboard.Id }, dashboard);
+            try
+            {
+                var created = _service.Add(item);
+                return CreatedAtAction(nameof(Get), new { id = created.IdDash }, created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar dashboard.");
+                return StatusCode(500, "Erro interno ao criar.");
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDashboard(int id, Dashboard dashboard)
+        public IActionResult Update(int id, [FromBody] Dashboard item)
         {
-            if (id != dashboard.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(dashboard).State = EntityState.Modified;
+            if (item == null || item.IdDash != id) return BadRequest("ID inválido.");
 
             try
             {
-                await _context.SaveChangesAsync();
+                _service.Update(id, item);
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!DashboardExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
+                _logger.LogError(ex, "Erro ao atualizar dashboard com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao atualizar.");
             }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDashboard(int id)
-        {
-            var dashboard = await _context.Dashboards.FindAsync(id);
-            if (dashboard == null)
-            {
-                return NotFound();
-            }
-
-            _context.Dashboards.Remove(dashboard);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool DashboardExists(int id)
-        {
-            return _context.Dashboards.Any(e => e.Id == id);
         }
     }
 }

@@ -1,7 +1,10 @@
-using YourProject.Models;
+using CashWiseAPI.Models;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 
-namespace YourProject.Services
+namespace CashWiseAPI.Services
 {
     public class TransacaoService
     {
@@ -9,110 +12,85 @@ namespace YourProject.Services
 
         public TransacaoService(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                              ?? throw new InvalidOperationException("Connection string not found.");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public List<Transacao> GetAll()
         {
-            var transacoes = new List<Transacao>();
+            var list = new List<Transacao>();
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "SELECT * FROM Transacoes";
+            var query = "SELECT * FROM TRANSACAO";
             using var cmd = new MySqlCommand(query, connection);
             using var reader = cmd.ExecuteReader();
-
             while (reader.Read())
             {
-                transacoes.Add(new Transacao
+                var item = new Transacao
                 {
-                    Id = reader.GetInt32("id"),
-                    Descricao = reader.GetString("descricao"),
-                    Valor = reader.GetDouble("valor"),
-                    Tipo = reader.GetString("tipo"),
-                    Data = reader.GetDateTime("data")
-                });
+                    IdTransacao = reader.GetInt32("ID_TRANSACAO"),
+                    DescricaoCont = reader.GetString("DESCRICAO_CONT"),
+                    ValorTrans = reader.GetDouble("VALOR_TRANS"),
+                    TipoTrans = reader.GetString("TIPO_TRANS"),
+                    DataTrans = reader.GetDateTime("DATA_TRANS"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK")
+                };
+                list.Add(item);
             }
-
-            return transacoes;
+            return list;
         }
 
-        public Transacao Get(int id)
+        public Transacao? Get(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "SELECT * FROM Transacoes WHERE id = @Id";
+            var query = "SELECT * FROM TRANSACAO WHERE ID_TRANSACAO = @Id";
             using var cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@Id", id);
-
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 return new Transacao
                 {
-                    Id = reader.GetInt32("id"),
-                    Descricao = reader.GetString("descricao"),
-                    Valor = reader.GetDouble("valor"),
-                    Tipo = reader.GetString("tipo"),
-                    Data = reader.GetDateTime("data")
+                    IdTransacao = reader.GetInt32("ID_TRANSACAO"),
+                    DescricaoCont = reader.GetString("DESCRICAO_CONT"),
+                    ValorTrans = reader.GetDouble("VALOR_TRANS"),
+                    TipoTrans = reader.GetString("TIPO_TRANS"),
+                    DataTrans = reader.GetDateTime("DATA_TRANS"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK")
                 };
             }
             return null;
         }
 
-        public Transacao Add(Transacao transacao)
+        public void Update(int id, Transacao updated)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = @"INSERT INTO Transacoes (descricao, valor, tipo, data) 
-                         VALUES (@Descricao, @Valor, @Tipo, @Data)";
+            var query = "UPDATE TRANSACAO SET DESCRICAO_CONT = @DESCRICAO_CONT, VALOR_TRANS = @VALOR_TRANS, TIPO_TRANS = @TIPO_TRANS, DATA_TRANS = @DATA_TRANS, USUARIOFK = @USUARIOFK WHERE ID_TRANSACAO = @Id";
             using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@Descricao", transacao.Descricao);
-            cmd.Parameters.AddWithValue("@Valor", transacao.Valor);
-            cmd.Parameters.AddWithValue("@Tipo", transacao.Tipo);
-            cmd.Parameters.AddWithValue("@Data", transacao.Data);
-
-            cmd.ExecuteNonQuery();
-            transacao.Id = (int)cmd.LastInsertedId;
-            return transacao;
-        }
-
-        public void Update(int id, Transacao transacao)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            connection.Open();
-
-            var query = @"UPDATE Transacoes 
-                         SET descricao = @Descricao, 
-                             valor = @Valor, 
-                             tipo = @Tipo, 
-                             data = @Data 
-                         WHERE id = @Id";
-            using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@Descricao", transacao.Descricao);
-            cmd.Parameters.AddWithValue("@Valor", transacao.Valor);
-            cmd.Parameters.AddWithValue("@Tipo", transacao.Tipo);
-            cmd.Parameters.AddWithValue("@Data", transacao.Data);
+            cmd.Parameters.AddWithValue("@DESCRICAO_CONT", updated.DescricaoCont);
+            cmd.Parameters.AddWithValue("@VALOR_TRANS", updated.ValorTrans);
+            cmd.Parameters.AddWithValue("@TIPO_TRANS", updated.TipoTrans);
+            cmd.Parameters.AddWithValue("@DATA_TRANS", updated.DataTrans);
+            cmd.Parameters.AddWithValue("@USUARIOFK", updated.UsuarioFK);
             cmd.Parameters.AddWithValue("@Id", id);
-
             cmd.ExecuteNonQuery();
         }
 
-        public bool Delete(int id)
+        public Transacao Add(Transacao obj)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "DELETE FROM Transacoes WHERE id = @Id";
+            var query = "INSERT INTO TRANSACAO (DESCRICAO_CONT, VALOR_TRANS, TIPO_TRANS, DATA_TRANS, USUARIOFK) VALUES (@DESCRICAO_CONT, @VALOR_TRANS, @TIPO_TRANS, @DATA_TRANS, @USUARIOFK)";
             using var cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@Id", id);
-
-            return cmd.ExecuteNonQuery() > 0;
+            cmd.Parameters.AddWithValue("@DESCRICAO_CONT", obj.DescricaoCont);
+            cmd.Parameters.AddWithValue("@VALOR_TRANS", obj.ValorTrans);
+            cmd.Parameters.AddWithValue("@TIPO_TRANS", obj.TipoTrans);
+            cmd.Parameters.AddWithValue("@DATA_TRANS", obj.DataTrans);
+            cmd.Parameters.AddWithValue("@USUARIOFK", obj.UsuarioFK);
+            cmd.ExecuteNonQuery();
+            obj.IdTransacao = (int)cmd.LastInsertedId;
+            return obj;
         }
     }
 }

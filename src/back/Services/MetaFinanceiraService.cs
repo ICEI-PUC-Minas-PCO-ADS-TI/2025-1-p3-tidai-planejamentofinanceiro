@@ -1,7 +1,10 @@
-using YourProject.Models;
+using CashWiseAPI.Models;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 
-namespace YourProject.Services
+namespace CashWiseAPI.Services
 {
     public class MetaFinanceiraService
     {
@@ -9,111 +12,85 @@ namespace YourProject.Services
 
         public MetaFinanceiraService(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                              ?? throw new InvalidOperationException("Connection string not found.");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public List<MetaFinanceira> GetAll()
         {
-            var metas = new List<MetaFinanceira>();
+            var list = new List<MetaFinanceira>();
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "SELECT * FROM MetasFinanceiras";
+            var query = "SELECT * FROM META_FINANCEIRA";
             using var cmd = new MySqlCommand(query, connection);
             using var reader = cmd.ExecuteReader();
-
             while (reader.Read())
             {
-                metas.Add(new MetaFinanceira
+                var item = new MetaFinanceira
                 {
-                    Id = reader.GetInt32("id"),
-                    Nome = reader.GetString("nome"),
-                    Valor = reader.GetDouble("valor"),
-                    Prazo = reader.GetDateTime("prazo"),
-                    Status = reader.GetString("status")
-                });
+                    IdMeta = reader.GetInt32("ID_META"),
+                    NomeMeta = reader.GetString("NOME_META"),
+                    ValorMeta = reader.GetDouble("VALOR_META"),
+                    PrazoMeta = reader.GetDateTime("PRAZO_META"),
+                    StatusMeta = reader.GetString("STATUS_META"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK")
+                };
+                list.Add(item);
             }
-
-            return metas;
+            return list;
         }
 
-        public MetaFinanceira Get(int id)
+        public MetaFinanceira? Get(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "SELECT * FROM MetasFinanceiras WHERE id = @Id";
+            var query = "SELECT * FROM META_FINANCEIRA WHERE ID_META = @Id";
             using var cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@Id", id);
-
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 return new MetaFinanceira
                 {
-                    Id = reader.GetInt32("id"),
-                    Nome = reader.GetString("nome"),
-                    Valor = reader.GetDouble("valor"),
-                    Prazo = reader.GetDateTime("prazo"),
-                    Status = reader.GetString("status")
+                    IdMeta = reader.GetInt32("ID_META"),
+                    NomeMeta = reader.GetString("NOME_META"),
+                    ValorMeta = reader.GetDouble("VALOR_META"),
+                    PrazoMeta = reader.GetDateTime("PRAZO_META"),
+                    StatusMeta = reader.GetString("STATUS_META"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK")
                 };
             }
             return null;
         }
 
-        public MetaFinanceira Add(MetaFinanceira meta)
+        public void Update(int id, MetaFinanceira updated)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = @"INSERT INTO MetasFinanceiras (nome, valor, prazo, status, usuarioId) 
-                         VALUES (@Nome, @Valor, @Prazo, @Status, @UsuarioId)";
+            var query = "UPDATE META_FINANCEIRA SET NOME_META = @NOME_META, VALOR_META = @VALOR_META, PRAZO_META = @PRAZO_META, STATUS_META = @STATUS_META, USUARIOFK = @USUARIOFK WHERE ID_META = @Id";
             using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@Nome", meta.Nome);
-            cmd.Parameters.AddWithValue("@Valor", meta.Valor);
-            cmd.Parameters.AddWithValue("@Prazo", meta.Prazo);
-            cmd.Parameters.AddWithValue("@Status", meta.Status);
-            cmd.Parameters.AddWithValue("@UsuarioId", meta.Usuario.Id);
-
-            cmd.ExecuteNonQuery();
-            meta.Id = (int)cmd.LastInsertedId;
-            return meta;
-        }
-
-        public void Update(int id, MetaFinanceira meta)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            connection.Open();
-
-            var query = @"UPDATE MetasFinanceiras 
-                         SET nome = @Nome, 
-                             valor = @Valor, 
-                             prazo = @Prazo, 
-                             status = @Status 
-                         WHERE id = @Id";
-            using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@Nome", meta.Nome);
-            cmd.Parameters.AddWithValue("@Valor", meta.Valor);
-            cmd.Parameters.AddWithValue("@Prazo", meta.Prazo);
-            cmd.Parameters.AddWithValue("@Status", meta.Status);
+            cmd.Parameters.AddWithValue("@NOME_META", updated.NomeMeta);
+            cmd.Parameters.AddWithValue("@VALOR_META", updated.ValorMeta);
+            cmd.Parameters.AddWithValue("@PRAZO_META", updated.PrazoMeta);
+            cmd.Parameters.AddWithValue("@STATUS_META", updated.StatusMeta);
+            cmd.Parameters.AddWithValue("@USUARIOFK", updated.UsuarioFK);
             cmd.Parameters.AddWithValue("@Id", id);
-
             cmd.ExecuteNonQuery();
         }
 
-        public bool Delete(int id)
+        public MetaFinanceira Add(MetaFinanceira obj)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "DELETE FROM MetasFinanceiras WHERE id = @Id";
+            var query = "INSERT INTO META_FINANCEIRA (NOME_META, VALOR_META, PRAZO_META, STATUS_META, USUARIOFK) VALUES (@NOME_META, @VALOR_META, @PRAZO_META, @STATUS_META, @USUARIOFK)";
             using var cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@Id", id);
-
-            return cmd.ExecuteNonQuery() > 0;
+            cmd.Parameters.AddWithValue("@NOME_META", obj.NomeMeta);
+            cmd.Parameters.AddWithValue("@VALOR_META", obj.ValorMeta);
+            cmd.Parameters.AddWithValue("@PRAZO_META", obj.PrazoMeta);
+            cmd.Parameters.AddWithValue("@STATUS_META", obj.StatusMeta);
+            cmd.Parameters.AddWithValue("@USUARIOFK", obj.UsuarioFK);
+            cmd.ExecuteNonQuery();
+            obj.IdMeta = (int)cmd.LastInsertedId;
+            return obj;
         }
     }
 }

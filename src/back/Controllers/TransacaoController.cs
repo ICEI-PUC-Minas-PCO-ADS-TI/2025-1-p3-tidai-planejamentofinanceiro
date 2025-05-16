@@ -1,67 +1,68 @@
+using CashWiseAPI.Models;
+using CashWiseAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using YourProject.Models;
-using YourProject.Data;
 
-namespace YourProject.Controllers
+namespace CashWiseAPI.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class TransacaoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TransacaoService _service;
+        private readonly ILogger<TransacaoController> _logger;
 
-        public TransacaoController(ApplicationDbContext context)
+        public TransacaoController(TransacaoService service, ILogger<TransacaoController> logger)
         {
-            _context = context;
+            _service = service;
+            _logger = logger;
         }
+
+        [HttpOptions]
+        public IActionResult Options() => Ok();
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Transacao>>> GetTransacoes()
-        {
-            return await _context.Transacoes.Include(t => t.Usuario).ToListAsync();
-        }
+        public ActionResult<List<Transacao>> Get() => _service.GetAll();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transacao>> GetTransacao(int id)
+        public ActionResult<Transacao> Get(int id)
         {
-            var transacao = await _context.Transacoes
-                .Include(t => t.Usuario)
-                .FirstOrDefaultAsync(t => t.Id == id);
-
-            if (transacao == null)
-            {
-                return NotFound();
-            }
-
-            return transacao;
+            var item = _service.Get(id);
+            return item is null ? NotFound() : item;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Transacao>> CreateTransacao(Transacao transacao)
+        public IActionResult Create([FromBody] Transacao item)
         {
-            _context.Transacoes.Add(transacao);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetTransacao), new { id = transacao.Id }, transacao);
+            try
+            {
+                var created = _service.Add(item);
+                return CreatedAtAction(nameof(Get), new { id = created.IdTransacao }, created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar transacao.");
+                return StatusCode(500, "Erro interno ao criar.");
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTransacao(int id)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Transacao item)
         {
-            var transacao = await _context.Transacoes.FindAsync(id);
-            if (transacao == null)
+            if (item == null || item.IdTransacao != id) return BadRequest("ID inválido.");
+
+            try
             {
-                return NotFound();
+                _service.Update(id, item);
+                return NoContent();
             }
-
-            _context.Transacoes.Remove(transacao);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao atualizar transacao com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao atualizar.");
+            }
         }
     }
 }

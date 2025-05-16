@@ -1,7 +1,10 @@
-using YourProject.Models;
+using CashWiseAPI.Models;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 
-namespace YourProject.Services
+namespace CashWiseAPI.Services
 {
     public class DashboardService
     {
@@ -9,66 +12,81 @@ namespace YourProject.Services
 
         public DashboardService(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                              ?? throw new InvalidOperationException("Connection string not found.");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public Dashboard GetByUserId(int userId)
+        public List<Dashboard> GetAll()
+        {
+            var list = new List<Dashboard>();
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            var query = "SELECT * FROM DASHBOARD";
+            using var cmd = new MySqlCommand(query, connection);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var item = new Dashboard
+                {
+                    IdDash = reader.GetInt32("ID_DASH"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK"),
+                    SaldoTotalDash = reader.GetDouble("SALDOTOTAL_DASH"),
+                    GastosMensaisDash = reader.GetDouble("GASTOSMENSAIS_DASH"),
+                    InvestimentoTotaisDash = reader.GetDouble("INVESTIMENTOTOTAIS_DASH")
+                };
+                list.Add(item);
+            }
+            return list;
+        }
+
+        public Dashboard? Get(int id)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = "SELECT * FROM Dashboards WHERE usuarioId = @UserId";
+            var query = "SELECT * FROM DASHBOARD WHERE ID_DASH = @Id";
             using var cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@UserId", userId);
-
+            cmd.Parameters.AddWithValue("@Id", id);
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 return new Dashboard
                 {
-                    Id = reader.GetInt32("id"),
-                    SaldoTotal = reader.GetDouble("saldoTotal"),
-                    InvestimentoTotal = reader.GetDouble("investimentoTotal")
+                    IdDash = reader.GetInt32("ID_DASH"),
+                    UsuarioFK = reader.GetInt32("USUARIOFK"),
+                    SaldoTotalDash = reader.GetDouble("SALDOTOTAL_DASH"),
+                    GastosMensaisDash = reader.GetDouble("GASTOSMENSAIS_DASH"),
+                    InvestimentoTotaisDash = reader.GetDouble("INVESTIMENTOTOTAIS_DASH")
                 };
             }
             return null;
         }
 
-        public Dashboard Add(Dashboard dashboard)
+        public void Update(int id, Dashboard updated)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = @"INSERT INTO Dashboards (usuarioId, saldoTotal, investimentoTotal) 
-                         VALUES (@UsuarioId, @SaldoTotal, @InvestimentoTotal)";
+            var query = "UPDATE DASHBOARD SET USUARIOFK = @USUARIOFK, SALDOTOTAL_DASH = @SALDOTOTAL_DASH, GASTOSMENSAIS_DASH = @GASTOSMENSAIS_DASH, INVESTIMENTOTOTAIS_DASH = @INVESTIMENTOTOTAIS_DASH WHERE ID_DASH = @Id";
             using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@UsuarioId", dashboard.Usuario.Id);
-            cmd.Parameters.AddWithValue("@SaldoTotal", dashboard.SaldoTotal);
-            cmd.Parameters.AddWithValue("@InvestimentoTotal", dashboard.InvestimentoTotal);
-
+            cmd.Parameters.AddWithValue("@USUARIOFK", updated.UsuarioFK);
+            cmd.Parameters.AddWithValue("@SALDOTOTAL_DASH", updated.SaldoTotalDash);
+            cmd.Parameters.AddWithValue("@GASTOSMENSAIS_DASH", updated.GastosMensaisDash);
+            cmd.Parameters.AddWithValue("@INVESTIMENTOTOTAIS_DASH", updated.InvestimentoTotaisDash);
+            cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
-            dashboard.Id = (int)cmd.LastInsertedId;
-            return dashboard;
         }
 
-        public void Update(int id, Dashboard dashboard)
+        public Dashboard Add(Dashboard obj)
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-
-            var query = @"UPDATE Dashboards 
-                         SET saldoTotal = @SaldoTotal, 
-                             investimentoTotal = @InvestimentoTotal 
-                         WHERE id = @Id";
+            var query = "INSERT INTO DASHBOARD (USUARIOFK, SALDOTOTAL_DASH, GASTOSMENSAIS_DASH, INVESTIMENTOTOTAIS_DASH) VALUES (@USUARIOFK, @SALDOTOTAL_DASH, @GASTOSMENSAIS_DASH, @INVESTIMENTOTOTAIS_DASH)";
             using var cmd = new MySqlCommand(query, connection);
-
-            cmd.Parameters.AddWithValue("@SaldoTotal", dashboard.SaldoTotal);
-            cmd.Parameters.AddWithValue("@InvestimentoTotal", dashboard.InvestimentoTotal);
-            cmd.Parameters.AddWithValue("@Id", id);
-
+            cmd.Parameters.AddWithValue("@USUARIOFK", obj.UsuarioFK);
+            cmd.Parameters.AddWithValue("@SALDOTOTAL_DASH", obj.SaldoTotalDash);
+            cmd.Parameters.AddWithValue("@GASTOSMENSAIS_DASH", obj.GastosMensaisDash);
+            cmd.Parameters.AddWithValue("@INVESTIMENTOTOTAIS_DASH", obj.InvestimentoTotaisDash);
             cmd.ExecuteNonQuery();
+            obj.IdDash = (int)cmd.LastInsertedId;
+            return obj;
         }
     }
 }

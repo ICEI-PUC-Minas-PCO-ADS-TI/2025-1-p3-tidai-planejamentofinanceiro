@@ -1,27 +1,14 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace YourProject.Models
+namespace CashWiseAPI.Models
 {
     public class MetaFinanceira
     {
-        [Key]
-        public int Id { get; set; }
-        
-        [Required]
-        public string Nome { get; set; } = string.Empty;
-        
-        public double Valor { get; set; }
-        public DateTime Prazo { get; set; }
-        
-        [Required]
-        public string Status { get; set; } = string.Empty;
-        
-        [Required]
-        public Pessoa Usuario { get; set; } = null!;
-
-        public void AddMeta() { }
-        public void AtualizarMeta() { }
-        public void VerificarProgresso() { }
+        public int IdMeta { get; set; }
+        public string NomeMeta { get; set; }
+        public double ValorMeta { get; set; }
+        public DateTime PrazoMeta { get; set; }
+        public string StatusMeta { get; set; }
+        public int UsuarioFK { get; set; }
     }
 }

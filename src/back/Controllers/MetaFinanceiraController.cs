@@ -1,98 +1,68 @@
+using CashWiseAPI.Models;
+using CashWiseAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using YourProject.Models;
-using YourProject.Data;
 
-namespace YourProject.Controllers
+namespace CashWiseAPI.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class MetaFinanceiraController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly MetaFinanceiraService _service;
+        private readonly ILogger<MetaFinanceiraController> _logger;
 
-        public MetaFinanceiraController(ApplicationDbContext context)
+        public MetaFinanceiraController(MetaFinanceiraService service, ILogger<MetaFinanceiraController> logger)
         {
-            _context = context;
+            _service = service;
+            _logger = logger;
         }
+
+        [HttpOptions]
+        public IActionResult Options() => Ok();
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MetaFinanceira>>> GetMetasFinanceiras()
-        {
-            return await _context.MetasFinanceiras.Include(m => m.Usuario).ToListAsync();
-        }
+        public ActionResult<List<MetaFinanceira>> Get() => _service.GetAll();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MetaFinanceira>> GetMetaFinanceira(int id)
+        public ActionResult<MetaFinanceira> Get(int id)
         {
-            var metaFinanceira = await _context.MetasFinanceiras
-                .Include(m => m.Usuario)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (metaFinanceira == null)
-            {
-                return NotFound();
-            }
-
-            return metaFinanceira;
+            var item = _service.Get(id);
+            return item is null ? NotFound() : item;
         }
 
         [HttpPost]
-        public async Task<ActionResult<MetaFinanceira>> CreateMetaFinanceira(MetaFinanceira metaFinanceira)
+        public IActionResult Create([FromBody] MetaFinanceira item)
         {
-            _context.MetasFinanceiras.Add(metaFinanceira);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetMetaFinanceira), new { id = metaFinanceira.Id }, metaFinanceira);
+            try
+            {
+                var created = _service.Add(item);
+                return CreatedAtAction(nameof(Get), new { id = created.IdMeta }, created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar metafinanceira.");
+                return StatusCode(500, "Erro interno ao criar.");
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMetaFinanceira(int id, MetaFinanceira metaFinanceira)
+        public IActionResult Update(int id, [FromBody] MetaFinanceira item)
         {
-            if (id != metaFinanceira.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(metaFinanceira).State = EntityState.Modified;
+            if (item == null || item.IdMeta != id) return BadRequest("ID inválido.");
 
             try
             {
-                await _context.SaveChangesAsync();
+                _service.Update(id, item);
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!MetaFinanceiraExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
+                _logger.LogError(ex, "Erro ao atualizar metafinanceira com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao atualizar.");
             }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMetaFinanceira(int id)
-        {
-            var metaFinanceira = await _context.MetasFinanceiras.FindAsync(id);
-            if (metaFinanceira == null)
-            {
-                return NotFound();
-            }
-
-            _context.MetasFinanceiras.Remove(metaFinanceira);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MetaFinanceiraExists(int id)
-        {
-            return _context.MetasFinanceiras.Any(e => e.Id == id);
         }
     }
 }

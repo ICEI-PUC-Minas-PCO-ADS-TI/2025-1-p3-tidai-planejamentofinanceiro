@@ -1,102 +1,65 @@
-using Microsoft.EntityFrameworkCore;
+using CashWiseAPI.Services;
 using Microsoft.OpenApi.Models;
-using YourProject.Data;
-using YourProject.Services;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Configurações de Kestrel via appsettings.json
 builder.WebHost.ConfigureKestrel((context, options) =>
 {
     options.Configure(context.Configuration.GetSection("Kestrel"));
 });
 
-
+// Serviços básicos
 builder.Services.AddControllers();
-
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
-
-builder.Services.AddScoped<DatabaseService>();
-builder.Services.AddScoped<TransacaoService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<MetaFinanceiraService>();
-builder.Services.AddScoped<DashboardService>();
-
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
-
-
 builder.Services.AddEndpointsApiExplorer();
+
+// Swagger
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "Financial Management API", 
-        Version = "v1",
-        Description = "API for managing financial transactions and user data",
-        Contact = new OpenApiContact
-        {
-            Name = "API Support",
-            Email = "support@example.com"
-        }
-    });
-
-    c.CustomSchemaIds(type => type.FullName);
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Description = "JWT Authorization header using the Bearer scheme.",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        Title = "CashWise API",
+        Version = "v1"
     });
+});
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+// Injeção de dependência dos serviços (sem interface)
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<ConteudoService>();
+builder.Services.AddScoped<MetaFinanceiraService>();
+builder.Services.AddScoped<TransacaoService>();
+builder.Services.AddScoped<DashboardService>();
+
+// CORS (opcional)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
 var app = builder.Build();
 
+// Adiciona a porta manualmente (caso queira fixar em código)
+app.Urls.Add("http://0.0.0.0:5284");
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Financial Management API V1");
-    c.RoutePrefix = "swagger";
-    c.DocumentTitle = "Financial Management API Documentation";
-    c.DefaultModelsExpandDepth(2);
-});
-
-app.UseHttpsRedirection();
+// Middleware
 app.UseCors("AllowAll");
+
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CashWise API v1");
+        c.RoutePrefix = "swagger";
+    });
+}
+
+app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

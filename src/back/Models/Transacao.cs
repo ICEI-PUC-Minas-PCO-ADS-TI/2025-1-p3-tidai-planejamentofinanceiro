@@ -1,35 +1,14 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace YourProject.Models
+namespace CashWiseAPI.Models
 {
     public class Transacao
     {
-        [Key]
-        public int Id { get; set; }
-        
-        [Required]
-        public string Descricao { get; set; } = string.Empty;
-        
-        public double Valor { get; set; }
-        
-        [Required]
-        public string Tipo { get; set; } = string.Empty; // "Receita" ou "Despesa"
-        
-        public DateTime Data { get; set; }
-        
-        [Required]
-        public Pessoa Usuario { get; set; } = null!;
-
-        public void RegistrarTransacao() { }
-        public void ExcluirTransacao() { }
-        public void GetId() { }
-        public void GetValor() { }
-        public void SetDescricao(string descricao) { }
-        public void GetDescricao() { }
-        public void SetValor(double valor) { }
-        public void GetTipo() { }
-        public void SetTipo(string tipo) { }
+        public int IdTransacao { get; set; }
+        public string DescricaoCont { get; set; }
+        public double ValorTrans { get; set; }
+        public string TipoTrans { get; set; }
+        public DateTime DataTrans { get; set; }
+        public int UsuarioFK { get; set; }
     }
 }

@@ -1,44 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
-namespace YourProject.Models
+namespace CashWiseAPI.Models
 {
-    [Table("CONTEUDO")] 
     public class Conteudo
     {
-        [Key]
-        [Column("ID_CONTEUDO")]
-        public int Id { get; set; }
-
-        [Required]
-        [Column("TITULO_CONTEUDO")]
-        public string Titulo { get; set; } = string.Empty;
-
-        [Required]
-        [Column("DESCRICAO_CONTEUDO")]
-        public string Descricao { get; set; } = string.Empty;
-
-        [Required]
-        [Column("TIPO_CONTEUDO")]
-        public string Tipo { get; set; } = string.Empty;
-
-        [Required]
-        [Column("NIVEL_CONTEUDO")]
-        public string Nivel { get; set; } = string.Empty;
-
-        [Column("DATA_PUBLICACAO")]
+        public int IdConteudo { get; set; }
+        public string TituloConteudo { get; set; }
+        public string DescricaoConteudo { get; set; }
+        public string TipoConteudo { get; set; }
+        public string NivelConteudo { get; set; }
         public DateTime DataPublicacao { get; set; }
-
-        [Column("USUARIOFK")]
-        public int UsuarioFk { get; set; }
-    
-
-
-    
-
-        public void GetId() { }
-        public void GetConteudo() { }
-        public void SetConteudo(string conteudo) { }
-        public void GetDescricaoConteudo(string conteudo) { }
+        public int UsuarioFK { get; set; }
     }
 }

@@ -1,96 +1,68 @@
+using CashWiseAPI.Models;
+using CashWiseAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using YourProject.Models;
-using YourProject.Data;
 
-namespace YourProject.Controllers
+namespace CashWiseAPI.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class ConteudoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ConteudoService _service;
+        private readonly ILogger<ConteudoController> _logger;
 
-        public ConteudoController(ApplicationDbContext context)
+        public ConteudoController(ConteudoService service, ILogger<ConteudoController> logger)
         {
-            _context = context;
+            _service = service;
+            _logger = logger;
         }
+
+        [HttpOptions]
+        public IActionResult Options() => Ok();
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Conteudo>>> GetConteudos()
-        {
-            return await _context.Conteudos.ToListAsync();
-        }
+        public ActionResult<List<Conteudo>> Get() => _service.GetAll();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Conteudo>> GetConteudo(int id)
+        public ActionResult<Conteudo> Get(int id)
         {
-            var conteudo = await _context.Conteudos.FindAsync(id);
-
-            if (conteudo == null)
-            {
-                return NotFound();
-            }
-
-            return conteudo;
+            var item = _service.Get(id);
+            return item is null ? NotFound() : item;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Conteudo>> CreateConteudo(Conteudo conteudo)
+        public IActionResult Create([FromBody] Conteudo item)
         {
-            _context.Conteudos.Add(conteudo);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetConteudo), new { id = conteudo.Id }, conteudo);
+            try
+            {
+                var created = _service.Add(item);
+                return CreatedAtAction(nameof(Get), new { id = created.IdConteudo }, created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar conteudo.");
+                return StatusCode(500, "Erro interno ao criar.");
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateConteudo(int id, Conteudo conteudo)
+        public IActionResult Update(int id, [FromBody] Conteudo item)
         {
-            if (id != conteudo.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(conteudo).State = EntityState.Modified;
+            if (item == null || item.IdConteudo != id) return BadRequest("ID inválido.");
 
             try
             {
-                await _context.SaveChangesAsync();
+                _service.Update(id, item);
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!ConteudoExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
+                _logger.LogError(ex, "Erro ao atualizar conteudo com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao atualizar.");
             }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteConteudo(int id)
-        {
-            var conteudo = await _context.Conteudos.FindAsync(id);
-            if (conteudo == null)
-            {
-                return NotFound();
-            }
-
-            _context.Conteudos.Remove(conteudo);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ConteudoExists(int id)
-        {
-            return _context.Conteudos.Any(e => e.Id == id);
         }
     }
 }
