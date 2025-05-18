@@ -9,6 +9,7 @@ namespace CashWiseAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+
     public class ConteudoController : ControllerBase
     {
         private readonly ConteudoService _service;

@@ -1,5 +1,8 @@
 using CashWiseAPI.Services;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +44,20 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ** Mova o AddAuthentication para cá, antes do Build **
+builder.Services.AddSingleton<TokenService>(); //chave do settings json 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("sua-chave-secreta-bem-segura")),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
 var app = builder.Build();
 
 // Adiciona a porta manualmente (caso queira fixar em código)
@@ -59,7 +76,11 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 }
 
-app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRouting();
+
 app.MapControllers();
+
 app.Run();

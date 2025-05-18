@@ -1,4 +1,4 @@
-function validateSignup() {
+/*function validateSignup() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -39,5 +39,52 @@ document.getElementById('signup-form')?.addEventListener('submit', function(even
     event.preventDefault();
     if (validateSignup()) {
         window.location.href = "../Home/Home.html";
-    }
+    }  */
+
+    ///Conexão com a API
+    document.getElementById('signup-form')?.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+  //  if (!validateSignup()) {
+     //   return;
+    //}
+
+    const formData = {
+        nome: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        senhaHash: document.getElementById('password').value
+    };
+
+    const API_BASE_URL = 'http://localhost:5284/Usuario';
+    // const API_BASE_URL = 'https://api.example.com'; // URL da sua API
+
+    fetch(`${API_BASE_URL}/Usuario`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(text || "Erro desconhecido do servidor.");
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Resposta da API:", data);
+
+        if (data.id || data.usuarioId) {
+            alert(`Usuário criado com sucesso!`);
+            window.location.href = "../Home/Home.html";
+        } else {
+            alert("Erro ao criar usuário. Nenhum ID retornado.");
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao salvar os dados do usuário: ' + (error.message || error));
+    });
 });

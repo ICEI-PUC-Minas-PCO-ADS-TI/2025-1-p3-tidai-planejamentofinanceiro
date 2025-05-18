@@ -56,3 +56,10 @@ C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\obj\Debug\net6.0\scoped
 C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\obj\Debug\net6.0\CashWise.76BC87BE.Up2Date
 C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\obj\Debug\net6.0\CashWiseAPI.genruntimeconfig.cache
 C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\obj\Debug\net6.0\ref\CashWiseAPI.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\allan\OneDrive\Área de Trabalho\TIADI\src\back\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
