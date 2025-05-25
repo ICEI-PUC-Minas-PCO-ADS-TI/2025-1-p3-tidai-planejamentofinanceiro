@@ -9,6 +9,6 @@ namespace CashWiseAPI.Models
         public string EmailUsuario { get; set; }
         public string SenhaUsuario { get; set; }
         public bool Endividado { get; set; }
-        public DateTime DataCriacao { get; set; }
+  
     }
 }

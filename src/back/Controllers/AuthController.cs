@@ -32,9 +32,12 @@ public class AuthController : ControllerBase
 
         return Ok(new
         {
-            Token = token,
-            UsuarioId = usuario.IdUsuario,
-            EmailUsuario = usuario.EmailUsuario
+               Token = token,
+    UsuarioId = usuario.IdUsuario,
+    EmailUsuario = usuario.EmailUsuario,
+    NomeUsuario = usuario.NomeUsuario,
+    Endividado = usuario.Endividado
+    // Adicione outros campos se quiser
         });
     }
 }
