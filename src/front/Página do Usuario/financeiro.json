@@ -1,0 +1,17 @@
+[
+    {
+        "id_dash": 1,
+        "usuariofk": 1,
+        "saldototal_dash": 500,
+        "gastosmensais_dash": 200,
+        "investimentostotais_dash": 300
+    },
+    {
+        "id_transacao": 1,
+        "valor_trans": 100,
+        "descricao_cont": "Compra de supermercado",
+        "tipo_trans": "Despesa",
+        "data_trans": "2023-10-01T10:00:00",
+        "usuariofk": 1
+    }
+]
