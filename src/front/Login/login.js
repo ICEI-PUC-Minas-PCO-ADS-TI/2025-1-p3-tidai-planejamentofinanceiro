@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const email = document.getElementById('email').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
     const senha = document.getElementById('password').value;
 
     if (!email || !senha) {
@@ -18,28 +18,31 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Busca todos os usuários (NÃO recomendado para produção!)
+    // Se o email contiver "admin", redireciona para a página do administrador
+    if (email.includes("admin")) {
+      console.log("Email com 'admin' detectado, redirecionando para AlterarA.html");
+      window.location.href = "../Alterar Administrador/AlterarA.html";
+      return;
+    }
+
+    // Caso contrário, segue com login normal
     fetch('http://localhost:5284/Usuario')
       .then(response => response.json())
       .then(usuarios => {
-        // Procura usuário com email e senha correspondentes
         const usuario = usuarios.find(u =>
-          u.emailUsuario === email && u.senhaUsuario === senha
+          u.emailUsuario.toLowerCase() === email && u.senhaUsuario === senha
         );
 
-  if (
-  usuario.isAdmin === true ||
-  usuario.tipo === 'admin' ||
-  usuario.nomeUsuario?.toLowerCase() === 'admin'
-) {
-  window.location.href = "../Alterar Administrador/AlterarA.html";
-} else {
-  window.location.href = "../Página do Usuario/Usuario.html";
-}
+        if (!usuario) {
+          alert('Usuário ou senha inválidos.');
+          return;
+        }
+
+        window.location.href = "../Página do Usuario/Usuario.html";
       })
       .catch(error => {
         console.error('Erro ao buscar usuários:', error);
         alert('Erro ao tentar logar.');
-      });
-  });
+      });
+  });
 });
