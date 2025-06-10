@@ -56,4 +56,47 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('fecharModal').onclick = () => modal.remove();
         modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
     });
+
+    document.getElementById('formTransacao').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Pegue os valores dos campos do formulário
+        const descricao = document.getElementById('descricao').value;
+        const valorTransacao = parseFloat(document.getElementById('valorTransacao').value);
+        const tipo = document.getElementById('tipo').value;
+        const dataTransacao = document.getElementById('dataTransacao').value;
+        const usuarioId = null; // TODO: recupere o ID do usuário autenticado
+        const isAdmin = false;  // TODO: recupere se o usuário é admin
+
+        try {
+            const response = await fetch('http://localhost:5284/Transacao', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // se precisar de cookies/sessão
+                body: JSON.stringify({
+                    DescricaoCont: descricao,
+                    ValorTrans: valorTransacao,
+                    TipoTrans: tipo,
+                    DataTrans: dataTransacao,
+                    UsuarioFk: usuarioId,
+                    isAdmin: isAdmin
+                })
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(errText || 'Erro ao realizar transação');
+            }
+
+            const data = await response.json();
+            console.log('Transacao realizada com sucesso:', data);
+            alert('Transação realizada com sucesso!');
+            window.location.href = '../Home/PerfilU.html';
+        } catch (error) {
+            console.error('Erro no cadastro:', error.message);
+            alert('Erro no cadastro: ' + error.message);
+        }
+    });
 });

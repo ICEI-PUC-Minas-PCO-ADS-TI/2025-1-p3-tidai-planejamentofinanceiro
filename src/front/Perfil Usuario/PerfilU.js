@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const $ = id => document.getElementById(id);
 
+  // Função utilitária para formatar valores em Real
+  function formatarReal(valor) {
+    const num = typeof valor === 'number' ? valor : parseFloat(String(valor).replace(/\./g, '').replace(',', '.'));
+    if (isNaN(num)) return 'R$ 0,00';
+    return num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
   // Elementos do perfil
   const spanName   = $('user-name');
   const spanAge    = $('user-age');
@@ -36,11 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
       spanAge.textContent    = data.idade ? `${data.idade} anos` : '';
       spanPeriod.textContent = data.periodo || '';
 
-      // Preenche estatísticas
-      totalGanhos.textContent     = `R$ ${data.totalGanhos ?? '0,00'}`;
-      totalGastos.textContent     = `R$ ${data.totalGastos ?? '0,00'}`;
-      totalInvestido.textContent  = `R$ ${data.totalInvestido ?? '0,00'}`;
-      lazerDisponivel.textContent = `R$ ${data.lazerDisponivel ?? '0,00'}`;
+      // Preenche estatísticas com formatação correta
+      totalGanhos.textContent     = formatarReal(data.totalGanhos ?? '0,00');
+      totalGastos.textContent     = formatarReal(data.totalGastos ?? '0,00');
+      totalInvestido.textContent  = formatarReal(data.totalInvestido ?? '0,00');
+      lazerDisponivel.textContent = formatarReal(data.lazerDisponivel ?? '0,00');
     })
     .catch(err => console.error('Erro ao buscar dados do usuário:', err));
 
@@ -76,10 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isNaN(age) && age > 0) spanAge.textContent = `${age} anos`;
     if (period) spanPeriod.textContent = period;
 
-    totalGanhos.textContent     = `R$ ${ganhos || '0,00'}`;
-    totalGastos.textContent     = `R$ ${gastos || '0,00'}`;
-    totalInvestido.textContent  = `R$ ${investido || '0,00'}`;
-    lazerDisponivel.textContent = `R$ ${lazer || '0,00'}`;
+    // Formata os valores ao salvar
+    totalGanhos.textContent     = formatarReal(ganhos || '0,00');
+    totalGastos.textContent     = formatarReal(gastos || '0,00');
+    totalInvestido.textContent  = formatarReal(investido || '0,00');
+    lazerDisponivel.textContent = formatarReal(lazer || '0,00');
 
     hideModal();
   };
@@ -99,4 +107,50 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && modal.classList.contains('d-flex')) hideModal();
   });
+
+  // Exemplo de envio de transação (caso tenha um formulário de transação no perfil)
+  const formTransacao = document.getElementById('formTransacao');
+  if (formTransacao) {
+    formTransacao.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const descricao = document.getElementById('descricao').value;
+      const valorTransacao = parseFloat(document.getElementById('valorTransacao').value);
+      const tipo = document.getElementById('tipo').value;
+      const dataTransacao = document.getElementById('dataTransacao').value;
+      const usuarioId = /* recupere o ID do usuário autenticado, ex: localStorage ou backend */ null;
+
+      if (!descricao || isNaN(valorTransacao) || !tipo || !dataTransacao || !usuarioId) {
+        alert('Preencha todos os campos corretamente!');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5284/Transacao', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            DescricaoCont: descricao,
+            ValorTrans: valorTransacao,
+            TipoTrans: tipo,
+            DataTrans: dataTransacao,
+            UsuarioFK: usuarioId
+          })
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(errText || 'Erro ao cadastrar transação');
+        }
+
+        alert('Transação cadastrada com sucesso!');
+        formTransacao.reset();
+      } catch (error) {
+        alert('Erro ao cadastrar transação: ' + error.message);
+      }
+    });
+  }
 });
