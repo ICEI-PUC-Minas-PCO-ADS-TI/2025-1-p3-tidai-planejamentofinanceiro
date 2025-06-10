@@ -8,6 +8,7 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 ## Diagrama de classes
 
+![Diagrama de classes](images/TIADI.drawio.png "Exemplo de modelo relacional.")
 O diagrama de classes ilustra graficamente a estrutura do software e como cada uma das classes estará interligada. Essas classes servem de modelo para materializar os objetos que serão executados na memória.
 
 > **Links úteis**:
