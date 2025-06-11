@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
+  // Funções para salvar e obter usuário logado no localStorage
+  function salvarUsuarioLocal(usuario) {
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+  }
+  function obterUsuarioLocal() {
+    const data = localStorage.getItem('usuarioLogado');
+    return data ? JSON.parse(data) : null;
+  }
+
   // Elementos do perfil
   const spanName   = $('user-name');
   const spanAge    = $('user-age');
@@ -34,22 +43,61 @@ document.addEventListener('DOMContentLoaded', () => {
   const inInvestido  = $('editInvestido');
   const inLazer      = $('editLazer');
 
-  // BUSCA DADOS DO USUÁRIO E DAS ESTATÍSTICAS
-  fetch('http://localhost:5284/Usuario', { method: 'GET', credentials: 'include' })
-    .then(res => res.json())
-    .then(data => {
-      // Preenche perfil
-      spanName.textContent   = data.nome || 'Usuário';
-      spanAge.textContent    = data.idade ? `${data.idade} anos` : '';
-      spanPeriod.textContent = data.periodo || '';
+  // Elementos da tabela de transações
+  const tabelaTransacoes = $('tabelaTransacoes'); // <tbody id="tabelaTransacoes"></tbody> no HTML
 
-      // Preenche estatísticas com formatação correta
-      totalGanhos.textContent     = formatarReal(data.totalGanhos ?? '0,00');
-      totalGastos.textContent     = formatarReal(data.totalGastos ?? '0,00');
-      totalInvestido.textContent  = formatarReal(data.totalInvestido ?? '0,00');
-      lazerDisponivel.textContent = formatarReal(data.lazerDisponivel ?? '0,00');
-    })
-    .catch(err => console.error('Erro ao buscar dados do usuário:', err));
+  // BUSCA DADOS DO USUÁRIO E DAS ESTATÍSTICAS
+  async function carregarPerfil() {
+    // Primeiro tenta do localStorage
+    let data = obterUsuarioLocal();
+    if (!data) {
+      try {
+        const res = await fetch('http://localhost:5284/Usuario', { method: 'GET', credentials: 'include' });
+        data = await res.json();
+        // Se for um array, pegue o primeiro usuário (ajuste conforme sua API)
+        if (Array.isArray(data)) data = data[0];
+        if (data) salvarUsuarioLocal(data);
+      } catch (err) {
+        console.error('Erro ao buscar dados do usuário:', err);
+        return;
+      }
+    }
+
+    // Preenche perfil
+    spanName.textContent   = data.nome || data.nomeUsuario || 'Usuário';
+    spanAge.textContent    = data.idade ? `${data.idade} anos` : '';
+    spanPeriod.textContent = data.periodo || '';
+
+    // Preenche estatísticas com formatação correta
+    totalGanhos.textContent     = formatarReal(data.totalGanhos ?? '0,00');
+    totalGastos.textContent     = formatarReal(data.totalGastos ?? '0,00');
+    totalInvestido.textContent  = formatarReal(data.totalInvestido ?? '0,00');
+    lazerDisponivel.textContent = formatarReal(data.lazerDisponivel ?? '0,00');
+  }
+
+  // BUSCA E EXIBE AS TRANSAÇÕES SALVAS
+  async function carregarTransacoes() {
+    if (!tabelaTransacoes) return;
+    try {
+      const res = await fetch('http://localhost:5284/Transacao', { method: 'GET', credentials: 'include' });
+      const transacoes = await res.json();
+      tabelaTransacoes.innerHTML = '';
+      if (Array.isArray(transacoes)) {
+        transacoes.forEach(transacao => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${transacao.descricaoCont}</td>
+            <td>${formatarReal(transacao.valorTrans)}</td>
+            <td>${transacao.tipoTrans}</td>
+            <td>${new Date(transacao.dataTrans).toLocaleDateString('pt-BR')}</td>
+          `;
+          tabelaTransacoes.appendChild(tr);
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao buscar transações:', err);
+    }
+  }
 
   // Função para abrir o modal preenchendo todos os campos
   function showModal(focusField = 'name') {
@@ -89,6 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     totalInvestido.textContent  = formatarReal(investido || '0,00');
     lazerDisponivel.textContent = formatarReal(lazer || '0,00');
 
+    // Atualiza localStorage com os novos dados
+    salvarUsuarioLocal({
+      nome: name,
+      idade: age,
+      periodo: period,
+      totalGanhos: ganhos,
+      totalGastos: gastos,
+      totalInvestido: investido,
+      lazerDisponivel: lazer
+    });
+
     hideModal();
   };
 
@@ -108,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && modal.classList.contains('d-flex')) hideModal();
   });
 
-  // Exemplo de envio de transação (caso tenha um formulário de transação no perfil)
+  // Envio de nova transação
   const formTransacao = document.getElementById('formTransacao');
   if (formTransacao) {
     formTransacao.addEventListener('submit', async function (e) {
@@ -118,7 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const valorTransacao = parseFloat(document.getElementById('valorTransacao').value);
       const tipo = document.getElementById('tipo').value;
       const dataTransacao = document.getElementById('dataTransacao').value;
-      const usuarioId = /* recupere o ID do usuário autenticado, ex: localStorage ou backend */ null;
+      // Busca o usuário logado do localStorage para pegar o ID
+      const usuarioLogado = obterUsuarioLocal();
+      const usuarioId = usuarioLogado && usuarioLogado.idUsuario ? usuarioLogado.idUsuario : null;
 
       if (!descricao || isNaN(valorTransacao) || !tipo || !dataTransacao || !usuarioId) {
         alert('Preencha todos os campos corretamente!');
@@ -148,9 +209,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert('Transação cadastrada com sucesso!');
         formTransacao.reset();
+        await carregarTransacoes(); // Atualiza a lista após cadastrar
       } catch (error) {
         alert('Erro ao cadastrar transação: ' + error.message);
       }
     });
   }
+
+  // Inicialização automática ao carregar a página
+  (async function initPerfil() {
+    await carregarPerfil();
+    await carregarTransacoes();
+  })();
 });
