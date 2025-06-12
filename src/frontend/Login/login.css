@@ -1,0 +1,36 @@
+/* Reset mínimo -----------------------------------------------*/
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cw-primary:#2d3e50;
+  --cw-accent:#4CAF50;
+}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;}
+a{text-decoration:none;}
+
+/* Cabeçalho e rodapé reutilizam estilos da Home ----------------*/
+.navbar {
+  background: #2d3e50;
+}
+.nav-link{color:#2d3e50!important;}
+.nav-link:hover{opacity:.8;}
+.footer,
+footer {
+  background: #2d3e50 !important;
+  color: #fff;
+}
+.footer a,
+footer a {
+  color: #fff;
+}
+.footer a:hover,
+footer a:hover {
+  text-decoration: underline;
+}
+/* Cartão de login ---------------------------------------------*/
+.login-card{
+  animation:fadeIn .4s ease-in-out;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:none;}
+}
