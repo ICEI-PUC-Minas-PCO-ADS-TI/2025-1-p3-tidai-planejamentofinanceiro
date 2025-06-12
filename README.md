@@ -6,7 +6,7 @@
 
 `Xº semestre/ANO`
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto
+Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 
 ## Integrantes
 
