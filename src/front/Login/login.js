@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
+        // Salva o email e o ID do usuário logado no localStorage para uso posterior
+        localStorage.setItem('usuarioLogadoEmail', usuario.emailUsuario);
+        localStorage.setItem('usuarioLogadoId', usuario.idUsuario);
+
         window.location.href = "../Página do Usuario/Usuario.html";
       })
       .catch(error => {

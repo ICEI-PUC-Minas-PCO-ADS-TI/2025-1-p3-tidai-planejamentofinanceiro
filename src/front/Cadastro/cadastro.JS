@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nome = form.name.value.trim();
     const email = form.email.value.trim();
     const senha = form.password.value.trim();
-    // Novo: verifica se o campo isAdmin existe e está marcado
-    const isAdmin = form.isAdmin ? form.isAdmin.checked : false;
 
     try {
       const response = await fetch('http://localhost:5284/Usuario', {
@@ -21,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          NomeUsuario: nome,
-          EmailUsuario: email,
-          SenhaUsuario: senha,
-          isAdmin: isAdmin // envia o campo para o backend
+          nomeUsuario: nome,
+          emailUsuario: email,
+          senhaUsuario: senha,
+          endividado: false // ou true, conforme sua lógica
         })
       });
 

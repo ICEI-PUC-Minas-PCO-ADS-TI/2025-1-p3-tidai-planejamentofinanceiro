@@ -8,15 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
-  // Funções para salvar e obter usuário logado no localStorage
-  function salvarUsuarioLocal(usuario) {
-    localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-  }
-  function obterUsuarioLocal() {
-    const data = localStorage.getItem('usuarioLogado');
-    return data ? JSON.parse(data) : null;
-  }
-
   // Elementos do perfil
   const spanName   = $('user-name');
   const spanAge    = $('user-age');
@@ -43,71 +34,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const inInvestido  = $('editInvestido');
   const inLazer      = $('editLazer');
 
-  // Elementos da tabela de transações
-  const tabelaTransacoes = $('tabelaTransacoes'); // <tbody id="tabelaTransacoes"></tbody> no HTML
-
-  // BUSCA DADOS DO USUÁRIO E DAS ESTATÍSTICAS
-  async function carregarPerfil() {
-    // Primeiro tenta do localStorage
-    let data = obterUsuarioLocal();
-    if (!data) {
-      try {
-        const res = await fetch('http://localhost:5284/Usuario', { method: 'GET', credentials: 'include' });
-        data = await res.json();
-        // Se for um array, pegue o primeiro usuário (ajuste conforme sua API)
-        if (Array.isArray(data)) data = data[0];
-        if (data) salvarUsuarioLocal(data);
-      } catch (err) {
-        console.error('Erro ao buscar dados do usuário:', err);
-        return;
-      }
-    }
-
-    // Preenche perfil
-    spanName.textContent   = data.nome || data.nomeUsuario || 'Usuário';
-    spanAge.textContent    = data.idade ? `${data.idade} anos` : '';
-    spanPeriod.textContent = data.periodo || '';
-
-    // Preenche estatísticas com formatação correta
-    totalGanhos.textContent     = formatarReal(data.totalGanhos ?? '0,00');
-    totalGastos.textContent     = formatarReal(data.totalGastos ?? '0,00');
-    totalInvestido.textContent  = formatarReal(data.totalInvestido ?? '0,00');
-    lazerDisponivel.textContent = formatarReal(data.lazerDisponivel ?? '0,00');
+  // Função para obter o ID do usuário logado
+  function getUsuarioLogadoId() {
+    return localStorage.getItem('usuarioLogadoId');
   }
 
-  // BUSCA E EXIBE AS TRANSAÇÕES SALVAS
-  async function carregarTransacoes() {
-    if (!tabelaTransacoes) return;
+  // BUSCA DADOS DO USUÁRIO E DAS ESTATÍSTICAS DIRETO DA API
+  async function carregarPerfil() {
     try {
-      const res = await fetch('http://localhost:5284/Transacao', { method: 'GET', credentials: 'include' });
-      const transacoes = await res.json();
-      tabelaTransacoes.innerHTML = '';
-      if (Array.isArray(transacoes)) {
-        transacoes.forEach(transacao => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${transacao.descricaoCont}</td>
-            <td>${formatarReal(transacao.valorTrans)}</td>
-            <td>${transacao.tipoTrans}</td>
-            <td>${new Date(transacao.dataTrans).toLocaleDateString('pt-BR')}</td>
-          `;
-          tabelaTransacoes.appendChild(tr);
-        });
-      }
+      const usuarioId = getUsuarioLogadoId();
+      if (!usuarioId) return;
+      const res = await fetch(`http://localhost:5284/Usuario/${usuarioId}`, { method: 'GET', credentials: 'include' });
+      const data = await res.json();
+
+      // Preenche perfil
+      spanName.textContent   = data.nomeUsuario || 'Usuário';
+      // Os campos abaixo são apenas visuais, não persistem no backend
+      spanAge.textContent    = localStorage.getItem('idadeUsuario') ? `${localStorage.getItem('idadeUsuario')} anos` : '';
+      spanPeriod.textContent = localStorage.getItem('periodoUsuario') || '';
+
+      // Preenche estatísticas (apenas visuais)
+      totalGanhos.textContent     = formatarReal(localStorage.getItem('totalGanhos') ?? '0,00');
+      totalGastos.textContent     = formatarReal(localStorage.getItem('totalGastos') ?? '0,00');
+      totalInvestido.textContent  = formatarReal(localStorage.getItem('totalInvestido') ?? '0,00');
+      lazerDisponivel.textContent = formatarReal(localStorage.getItem('lazerDisponivel') ?? '0,00');
     } catch (err) {
-      console.error('Erro ao buscar transações:', err);
+      console.error('Erro ao buscar dados do usuário:', err);
     }
   }
 
   // Função para abrir o modal preenchendo todos os campos
   function showModal(focusField = 'name') {
     inName.value      = spanName.textContent.trim();
-    inAge.value       = spanAge.textContent.replace(/\D/g,'');
-    inPeriod.value    = spanPeriod.textContent.trim();
-    inGanhos.value    = totalGanhos.textContent.replace(/[^\d,]/g,'').trim();
-    inGastos.value    = totalGastos.textContent.replace(/[^\d,]/g,'').trim();
-    inInvestido.value = totalInvestido.textContent.replace(/[^\d,]/g,'').trim();
-    inLazer.value     = lazerDisponivel.textContent.replace(/[^\d,]/g,'').trim();
+    inAge.value       = localStorage.getItem('idadeUsuario') || '';
+    inPeriod.value    = localStorage.getItem('periodoUsuario') || '';
+    inGanhos.value    = localStorage.getItem('totalGanhos') || '';
+    inGastos.value    = localStorage.getItem('totalGastos') || '';
+    inInvestido.value = localStorage.getItem('totalInvestido') || '';
+    inLazer.value     = localStorage.getItem('lazerDisponivel') || '';
     modal.classList.add('d-flex');
     if (focusField === 'stats') {
       inGanhos.focus();
@@ -118,35 +82,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hideModal = () => { modal.classList.remove('d-flex'); };
 
-  const saveProfile = () => {
+  // Salva perfil direto na API (apenas os campos aceitos pelo backend)
+  const saveProfile = async () => {
     const name      = inName.value.trim();
-    const age       = parseInt(inAge.value.trim(),10);
+    const age       = inAge.value.trim();
     const period    = inPeriod.value.trim();
     const ganhos    = inGanhos.value.trim();
     const gastos    = inGastos.value.trim();
     const investido = inInvestido.value.trim();
     const lazer     = inLazer.value.trim();
 
-    if (name)   spanName.textContent = name;
-    if (!isNaN(age) && age > 0) spanAge.textContent = `${age} anos`;
-    if (period) spanPeriod.textContent = period;
+    // Buscar o usuarioId do usuário logado
+    const usuarioId = getUsuarioLogadoId();
+    if (!usuarioId) {
+      alert('Usuário não encontrado para atualizar!');
+      return;
+    }
 
-    // Formata os valores ao salvar
-    totalGanhos.textContent     = formatarReal(ganhos || '0,00');
-    totalGastos.textContent     = formatarReal(gastos || '0,00');
-    totalInvestido.textContent  = formatarReal(investido || '0,00');
-    lazerDisponivel.textContent = formatarReal(lazer || '0,00');
+    // Buscar o usuário original pelo ID
+    let usuarioOriginal = null;
+    try {
+      const res = await fetch(`http://localhost:5284/Usuario/${usuarioId}`, { method: 'GET', credentials: 'include' });
+      usuarioOriginal = await res.json();
+    } catch {
+      alert('Erro ao buscar usuário!');
+      return;
+    }
 
-    // Atualiza localStorage com os novos dados
-    salvarUsuarioLocal({
-      nome: name,
-      idade: age,
-      periodo: period,
-      totalGanhos: ganhos,
-      totalGastos: gastos,
-      totalInvestido: investido,
-      lazerDisponivel: lazer
-    });
+    // Monte o objeto apenas com os campos aceitos pela API
+    const usuarioAtualizado = {
+      idUsuario: Number(usuarioId),
+      nomeUsuario: name,
+      emailUsuario: usuarioOriginal.emailUsuario,
+      senhaUsuario: usuarioOriginal.senhaUsuario,
+      endividado: usuarioOriginal.endividado
+    };
+
+    try {
+      await fetch(`http://localhost:5284/Usuario/${usuarioId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(usuarioAtualizado)
+      });
+
+      // Atualiza a tela com o novo nome
+      spanName.textContent = name || 'Usuário';
+
+      // Salva os campos extras apenas no localStorage (não persistem no backend)
+      localStorage.setItem('idadeUsuario', age);
+      localStorage.setItem('periodoUsuario', period);
+      localStorage.setItem('totalGanhos', ganhos);
+      localStorage.setItem('totalGastos', gastos);
+      localStorage.setItem('totalInvestido', investido);
+      localStorage.setItem('lazerDisponivel', lazer);
+
+      spanAge.textContent    = age ? `${age} anos` : '';
+      spanPeriod.textContent = period || '';
+      totalGanhos.textContent     = formatarReal(ganhos || '0,00');
+      totalGastos.textContent     = formatarReal(gastos || '0,00');
+      totalInvestido.textContent  = formatarReal(investido || '0,00');
+      lazerDisponivel.textContent = formatarReal(lazer || '0,00');
+    } catch (err) {
+      alert('Erro ao salvar perfil na API!');
+    }
 
     hideModal();
   };
@@ -167,58 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && modal.classList.contains('d-flex')) hideModal();
   });
 
-  // Envio de nova transação
-  const formTransacao = document.getElementById('formTransacao');
-  if (formTransacao) {
-    formTransacao.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const descricao = document.getElementById('descricao').value;
-      const valorTransacao = parseFloat(document.getElementById('valorTransacao').value);
-      const tipo = document.getElementById('tipo').value;
-      const dataTransacao = document.getElementById('dataTransacao').value;
-      // Busca o usuário logado do localStorage para pegar o ID
-      const usuarioLogado = obterUsuarioLocal();
-      const usuarioId = usuarioLogado && usuarioLogado.idUsuario ? usuarioLogado.idUsuario : null;
-
-      if (!descricao || isNaN(valorTransacao) || !tipo || !dataTransacao || !usuarioId) {
-        alert('Preencha todos os campos corretamente!');
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:5284/Transacao', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            DescricaoCont: descricao,
-            ValorTrans: valorTransacao,
-            TipoTrans: tipo,
-            DataTrans: dataTransacao,
-            UsuarioFK: usuarioId
-          })
-        });
-
-        if (!response.ok) {
-          const errText = await response.text();
-          throw new Error(errText || 'Erro ao cadastrar transação');
-        }
-
-        alert('Transação cadastrada com sucesso!');
-        formTransacao.reset();
-        await carregarTransacoes(); // Atualiza a lista após cadastrar
-      } catch (error) {
-        alert('Erro ao cadastrar transação: ' + error.message);
-      }
-    });
-  }
-
   // Inicialização automática ao carregar a página
   (async function initPerfil() {
     await carregarPerfil();
-    await carregarTransacoes();
   })();
 });
