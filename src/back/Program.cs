@@ -44,15 +44,19 @@ builder.Services.AddCors(options =>
     });
 });
 
-// ** Mova o AddAuthentication para cá, antes do Build **
-builder.Services.AddSingleton<TokenService>(); //chave do settings json 
+// JWT Authentication
+builder.Services.AddSingleton<TokenService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var secret = builder.Configuration["JwtSettings:SecretKey"];
+        if (string.IsNullOrEmpty(secret))
+            throw new Exception("JwtSettings:SecretKey não configurado!");
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("sua-chave-secreta-bem-segura")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -60,12 +64,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
 // Adiciona a porta manualmente (caso queira fixar em código)
 app.Urls.Add("http://0.0.0.0:5284");
 
 // Middleware
-app.UseCors("AllowAll");
-
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
@@ -76,11 +83,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 }
 
+app.UseRouting();
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseRouting();
-
 app.MapControllers();
 
 app.Run();

@@ -31,8 +31,7 @@ namespace CashWiseAPI.Services
                     NomeUsuario = reader.GetString("NOME_USUARIO"),
                     EmailUsuario = reader.GetString("EMAIL_USUARIO"),
                     SenhaUsuario = reader.GetString("SENHA_USUARIO"),
-                    Endividado = reader.GetBoolean("ENDIVIDADO"),
-                    
+                    Endividado = reader.GetBoolean("ENDIVIDADO")
                 };
                 list.Add(item);
             }
@@ -55,8 +54,7 @@ namespace CashWiseAPI.Services
                     NomeUsuario = reader.GetString("NOME_USUARIO"),
                     EmailUsuario = reader.GetString("EMAIL_USUARIO"),
                     SenhaUsuario = reader.GetString("SENHA_USUARIO"),
-                    Endividado = reader.GetBoolean("ENDIVIDADO"),
-                   
+                    Endividado = reader.GetBoolean("ENDIVIDADO")
                 };
             }
             return null;
@@ -66,7 +64,7 @@ namespace CashWiseAPI.Services
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-            var query = "UPDATE USUARIO SET NOME_USUARIO = @NOME_USUARIO, EMAIL_USUARIO = @EMAIL_USUARIO, SENHA_USUARIO = @SENHA_USUARIO, ENDIVIDADO = @ENDIVIDADO, DATA_CRIACAO = @DATA_CRIACAO WHERE ID_USUARIO = @Id";
+            var query = "UPDATE USUARIO SET NOME_USUARIO = @NOME_USUARIO, EMAIL_USUARIO = @EMAIL_USUARIO, SENHA_USUARIO = @SENHA_USUARIO, ENDIVIDADO = @ENDIVIDADO WHERE ID_USUARIO = @Id";
             using var cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@NOME_USUARIO", updated.NomeUsuario);
             cmd.Parameters.AddWithValue("@EMAIL_USUARIO", updated.EmailUsuario);
@@ -80,7 +78,7 @@ namespace CashWiseAPI.Services
         {
             using var connection = new MySqlConnection(_connectionString);
             connection.Open();
-            var query = "INSERT INTO USUARIO (NOME_USUARIO, EMAIL_USUARIO, SENHA_USUARIO, ENDIVIDADO, DATA_CRIACAO) VALUES (@NOME_USUARIO, @EMAIL_USUARIO, @SENHA_USUARIO, @ENDIVIDADO, @DATA_CRIACAO)";
+            var query = "INSERT INTO USUARIO (NOME_USUARIO, EMAIL_USUARIO, SENHA_USUARIO, ENDIVIDADO) VALUES (@NOME_USUARIO, @EMAIL_USUARIO, @SENHA_USUARIO, @ENDIVIDADO)";
             using var cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@NOME_USUARIO", obj.NomeUsuario);
             cmd.Parameters.AddWithValue("@EMAIL_USUARIO", obj.EmailUsuario);
@@ -89,6 +87,6 @@ namespace CashWiseAPI.Services
             cmd.ExecuteNonQuery();
             obj.IdUsuario = (int)cmd.LastInsertedId;
             return obj;
-        }
-    }
+        }
+    }
 }

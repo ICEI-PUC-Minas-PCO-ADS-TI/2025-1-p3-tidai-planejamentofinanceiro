@@ -24,13 +24,32 @@ namespace CashWiseAPI.Controllers
         public IActionResult Options() => Ok();
 
         [HttpGet]
-        public ActionResult<List<Usuario>> Get() => _service.GetAll();
+        public ActionResult<List<Usuario>> Get()
+        {
+            try
+            {
+                return _service.GetAll();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao listar usuários.");
+                return StatusCode(500, "Erro interno ao listar usuários.");
+            }
+        }
 
         [HttpGet("{id}")]
         public ActionResult<Usuario> Get(int id)
         {
-            var item = _service.Get(id);
-            return item is null ? NotFound() : item;
+            try
+            {
+                var item = _service.Get(id);
+                return item is null ? NotFound() : item;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar usuário com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao buscar usuário.");
+            }
         }
 
         [HttpPost]
@@ -43,15 +62,16 @@ namespace CashWiseAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao criar usuario.");
-                return StatusCode(500, "Erro interno ao criar.");
+                _logger.LogError(ex, "Erro ao criar usuário.");
+                return StatusCode(500, "Erro interno ao criar usuário.");
             }
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Usuario item)
         {
-            if (item == null || item.IdUsuario != id) return BadRequest("ID inválido.");
+            if (item == null || item.IdUsuario != id)
+                return BadRequest("ID inválido.");
 
             try
             {
@@ -60,8 +80,8 @@ namespace CashWiseAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao atualizar usuario com ID {Id}", id);
-                return StatusCode(500, "Erro interno ao atualizar.");
+                _logger.LogError(ex, "Erro ao atualizar usuário com ID {Id}", id);
+                return StatusCode(500, "Erro interno ao atualizar usuário.");
             }
         }
     }
