@@ -128,21 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(usuarioAtualizado)
       });
 
-      // Após atualizar o usuário, registre a transação
-      await fetch('http://localhost:5284/Transacao', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          descricaoCont: 'Atualização de perfil',
-          valorTrans: 0,
-          tipoTrans: 'Perfil',
-          dataTrans: new Date().toISOString(),
-          usuarioFK: Number(usuarioId)
-        })
-      });
+      // Após atualizar o usuário, registre uma transação para cada campo de valor
+      const now = new Date().toISOString();
+
+      const transacoes = [
+        { descricaoCont: 'Total de Ganhos',   valorTrans: ganhos,    tipoTrans: '', dataTrans: now },
+        { descricaoCont: 'Total de Gastos',   valorTrans: gastos,    tipoTrans: '', dataTrans: now },
+        { descricaoCont: 'Total Investido',   valorTrans: investido, tipoTrans: '', dataTrans: now },
+        { descricaoCont: 'Lazer Disponível',  valorTrans: lazer,     tipoTrans: '', dataTrans: now }
+      ];
+
+      for (const trans of transacoes) {
+        await fetch('http://localhost:5284/Transacao', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            ...trans,
+            valorTrans: Number(String(trans.valorTrans).replace(/\./g, '').replace(',', '.')) || 0,
+            usuarioFK: Number(usuarioId)
+          })
+        });
+      }
 
       // Atualiza a tela com o novo nome
       spanName.textContent = name || 'Usuário';
