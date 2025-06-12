@@ -1,35 +1,26 @@
-# Nome do projeto
+# Cash Wise 
 
 `CURSO: Análise e Desenvolvimento de Sistemas`
 
 `DISCIPLINA: Trabalho Interdisciplinar Desenvolvimento de Aplicação Interativa`
 
-`Xº semestre/ANO`
+`3º semestre/2025`
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
+A presente documentação descreve a especificação de um projeto de aplicação voltada para planejamento financeiro pessoal. A solução busca auxiliar usuários em diferentes níveis de conhecimento e organização financeira a gerenciar suas finanças, reduzir dívidas e, eventualmente, realizar investimentos.
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Allan Junio de Souza Muniz
+* Gabriel Henrique Medice Marçal
+* Thiago Guilherme Marques Soares
+* Luis Gustavo do Nascimento Marinho
+* Christiano da Silva Barbosa
+* Kauan Maia Moreira Fernandes
 
 ## Professor
 
-* Nome completo do(a) professor(a)
+* Kleber Jacques Ferreira de Souza
 
-## Instruções de utilização
-
-Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
-
-Não deixe de informar o link onde a aplicação estará disponível para acesso (por exemplo: https://adota-pet.herokuapp.com/src/index.html).
-
-Se houver usuário de teste, o login e a senha também deverão ser informados aqui (por exemplo: usuário - admin / senha - admin).
-
-O link e o usuário/senha descritos acima são apenas exemplos de como tais informações deverão ser apresentadas.
 
 # Documentação
 
