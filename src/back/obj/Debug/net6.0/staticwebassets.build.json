@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "iLZv7T8SqCvtqqVGmDSuy2R7mWSu9lzKpiJWR9e61uQ=",
+  "Source": "CashWiseAPI",
+  "BasePath": "_content/CashWiseAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

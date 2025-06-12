@@ -1,4 +1,3 @@
-
 # Projeto de interface
 
 <span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
@@ -11,12 +10,7 @@ Visão geral da interação do usuário pelas telas do sistema e protótipo inte
 
 Fluxo de usuário (user flow) é uma técnica que permite ao desenvolvedor mapear todo o fluxo de navegação do usuário na aplicação. Essa técnica serve para alinhar os caminhos e as possíveis ações que o usuário pode realizar junto com os membros da equipe.
 
-![Exemplo de user flow](images/user_flow.jpg)
-
-> **Links úteis**:
-> - [User flow: o quê é e como fazer?](https://medium.com/7bits/fluxo-de-usu%C3%A1rio-user-flow-o-que-%C3%A9-como-fazer-79d965872534)
-> - [User flow vs site maps](http://designr.com.br/sitemap-e-user-flow-quais-as-diferencas-e-quando-usar-cada-um/)
-> - [Top 25 user flow tools & templates for smooth](https://www.mockplus.com/blog/post/user-flow-tools)
+![Userflow](images/userflowTotal.png)
 
 ### Diagrama de fluxo
 
@@ -24,31 +18,39 @@ O diagrama apresenta o estudo do fluxo de interação do usuário com o sistema 
 
 O diagrama de fluxo pode ser desenvolvido com “boxes” que possuem, internamente, a indicação dos principais elementos de interface — tais como menus e acessos — e funcionalidades, como editar, pesquisar, filtrar e configurar, além da conexão entre esses boxes a partir do processo de interação.
 
-![Exemplo de diagrama de fluxo](images/diagrama_fluxo.jpg)
-
-> **Links úteis**:
-> - [Como criar um diagrama de fluxo de usuário](https://www.lucidchart.com/blog/how-to-make-a-user-flow-diagram)
-> - [Fluxograma online: seis sites para fazer gráfico sem instalar nada](https://www.techtudo.com.br/listas/2019/03/fluxograma-online-seis-sites-para-fazer-grafico-sem-instalar-nada.ghtml)
+![Diagrama de Fluxo](images/DiagramaFluxo1.png)
 
 ## Wireframes
 
 São protótipos usados no design de interface para sugerir a estrutura de um site web e seu relacionamento entre suas páginas. Um wireframe web é uma ilustração que mostra o layout dos elementos fundamentais na interface.
 
-![Exemplo de wireframe](images/wireframe.png)
+![Home](images/wireframes/home.png)
+![Cadastro](images/wireframes/cadastro.png)
+![Login](images/wireframes/login.png)
+![Perfil](images/wireframes/perfil.png)
+![Conteúdo](images/wireframes/conteudo.png)
+![Alterar perfil](images/wireframes/alterarPerfil.png)
+![Dashboard](images/wireframes/Dashboard.png)
+![Perfil adm](images/wireframes/perfilADM.png)
  
-> **Links úteis**:
-> - [Protótipos: baixa, média ou alta fidelidade?](https://medium.com/ladies-that-ux-br/prot%C3%B3tipos-baixa-m%C3%A9dia-ou-alta-fidelidade-71d897559135)
-> - [Protótipos vs wireframes](https://www.nngroup.com/videos/prototypes-vs-wireframes-ux-projects/)
-> - [Ferramentas de wireframes](https://rockcontent.com/blog/wireframes/)
-> - [MarvelApp](https://marvelapp.com/developers/documentation/tutorials/)
-> - [Figma](https://www.figma.com/)
-> - [Adobe XD](https://www.adobe.com/br/products/xd.html#scroll)
-> - [Axure](https://www.axure.com/edu) (Licença Educacional)
-> - [InvisionApp](https://www.invisionapp.com/) (Licença Educacional)
-
-
+ 
 ## Interface do sistema
 
 Visão geral da interação do usuário por meio das telas do sistema. 
 
-> Apresente as principais interfaces da plataforma em sua versão final.
+![Home](./images/Telas%20Front/home.png)
+
+![Login](./images/Telas%20Front/Login.png)
+
+![Cadastro](./images/Telas%20Front/Cadastro.png)
+
+![Pagiana de Usuario](./images/Telas%20Front/PaginaUsuario.png)
+
+![Perfil Usuario](./images/Telas%20Front/PerfilUsuario.png)
+
+![Conteudo](./images/Telas%20Front/Conteudo.png)
+
+![Alterar usuario ](./images/Telas%20Front/Alterar%20usuario.png)
+
+![Alterar Administrador ](./images/Telas%20Front/Alterar%20Admin.png)
+
