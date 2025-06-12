@@ -128,6 +128,22 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(usuarioAtualizado)
       });
 
+      // Após atualizar o usuário, registre a transação
+      await fetch('http://localhost:5284/Transacao', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          descricaoCont: 'Atualização de perfil',
+          valorTrans: 0,
+          tipoTrans: 'Perfil',
+          dataTrans: new Date().toISOString(),
+          usuarioFK: Number(usuarioId)
+        })
+      });
+
       // Atualiza a tela com o novo nome
       spanName.textContent = name || 'Usuário';
 
