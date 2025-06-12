@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
         {
             return Unauthorized("Credenciais inválidas");
         }
-//aa
+//aaa
         var token = _tokenService.GenerateToken(usuario.IdUsuario, usuario.EmailUsuario);
 
         return Ok(new
