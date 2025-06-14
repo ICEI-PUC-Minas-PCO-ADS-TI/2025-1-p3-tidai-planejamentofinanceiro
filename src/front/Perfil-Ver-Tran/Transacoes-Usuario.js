@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const inInvestido  = $('editInvestido');
   const inLazer      = $('editLazer');
 
+  const btnChangeAvatar = $('changeAvatar');
+  const inputAvatar = $('avatarInput');
+  const avatarImg = $('admin-avatar');
+
   const formatarReal = valor => {
     const num = typeof valor === 'number' ? valor : parseFloat(String(valor).replace(/\./g, '').replace(',', '.'));
     if (isNaN(num)) return 'R$ 0,00';
@@ -47,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     totalGastos.textContent     = formatarReal(localStorage.getItem('totalGastos') ?? '0,00');
     totalInvestido.textContent  = formatarReal(localStorage.getItem('totalInvestido') ?? '0,00');
     lazerDisponivel.textContent = formatarReal(localStorage.getItem('lazerDisponivel') ?? '0,00');
+
+    // Avatar salvo no localStorage
+    const avatarSalvo = localStorage.getItem('avatarUsuario');
+    if (avatarSalvo) avatarImg.src = avatarSalvo;
   }
 
   // Abrir modal
@@ -125,13 +133,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Eventos
+  // Eventos do modal
   btnEdit     .addEventListener('click', () => showModal('name'));
   btnEditStats.addEventListener('click', () => showModal('stats'));
   btnClose    .addEventListener('click', hideModal);
   btnSave     .addEventListener('click', saveProfile);
   modal.addEventListener('click', e => { if (!modalContent.contains(e.target)) hideModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
+
+  // Evento para abrir input de avatar
+  btnChangeAvatar?.addEventListener('click', () => {
+    inputAvatar.click();
+  });
+
+  // Evento para mudar imagem e salvar no localStorage
+  inputAvatar?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      avatarImg.src = reader.result;
+      localStorage.setItem('avatarUsuario', reader.result);
+    };
+    reader.readAsDataURL(file);
+  });
 
   carregarPerfil();
 });
