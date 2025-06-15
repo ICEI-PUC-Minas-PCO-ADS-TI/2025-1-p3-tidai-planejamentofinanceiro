@@ -64,22 +64,15 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | **CT02** | Login com credenciais corretas | Redirecionamento para tela principal | Resultado Obtido | **Aprovado/Reprovado** | - |
 | **CT03** | Login com senha incorreta | Exibição de mensagem de erro | Resultado Obtido | **Aprovado/Reprovado** | - |
 | **CT04** | E-mail inválido no cadastro | Exibição de erro de validação | Resultado Obtido | **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
-
-##### Registro de Evidência
-
-  * **CT01:** [Screenshot da tela de sucesso pós-cadastro](https://www.google.com/search?q=https://example.com/evidence/CT01.png)
-  * **CT02:** [Screenshot do dashboard após login](https://www.google.com/search?q=https://example.com/evidence/CT02.png)
-  * **CT03:** [Screenshot da mensagem de erro de login](https://www.google.com/search?q=https://example.com/evidence/CT03.png)
-  * **CT04:** [Screenshot da validação do campo de e-mail](https://www.google.com/search?q=https://example.com/evidence/CT04.png)
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02)                            |
 
 #### **2.2. Lançamentos Financeiros**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Lançamento de 'Almoço' (R$ 25,00) adicionado e visível na lista. | **Aprovado** | - |
-| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). | **Aprovado** | - |
-| **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. | **Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
+| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Lançamento de 'Almoço' (R$ 25,00) adicionado e visível na lista. |  **Aprovado/Reprovado** | - |
+| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). |  **Aprovado/Reprovado** | - |
+| **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. |  **Aprovado/Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
 
 ##### Registro de Evidência
 
@@ -91,8 +84,8 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. | **Aprovado** | - |
-| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. | **Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
+| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. |  **Aprovado/Reprovado** | - |
+| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. |  **Aprovado/Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
 
 ##### Registro de Evidência
 
@@ -107,8 +100,8 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. | **Aprovado** | - |
-| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. | **Aprovado** | - |
+| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. |  **Aprovado/Reprovado** | - |
+| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. |  **Aprovado/Reprovado** | - |
 
 ##### Registro de Evidência
 
@@ -119,7 +112,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). | **Aprovado** | Atende ao critério. |
+| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). |  **Aprovado/Reprovado** | Atende ao critério. |
 
 ##### Registro de Evidência
 
@@ -129,8 +122,8 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). | **Aprovado** | - |
-| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. | **Aprovado** | - |
+| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). |  **Aprovado/Reprovado** | - |
+| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. |  **Aprovado/Reprovado** | - |
 
 ##### Registro de Evidência
 
