@@ -142,12 +142,3 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 
 ### **5. Conclusão e Recomendações**
-
-Exemplo Texto:
-"
-O ciclo de testes não atendeu a todos os critérios de aceitação definidos no plano, especificamente:
-
-  * "Todos os testes críticos devem ser aprovados" (CT07 reprovado).
-  * "Nenhum erro de alta prioridade pode permanecer sem correção" (CT09 reprovado).
-"
-**Recomendação:** Exemplo Texto: "A versão **não está apta** para ser liberada para produção. Recomenda-se a correção dos defeitos **CW-101** e **CW-102** pela equipe de desenvolvimento e a execução de um novo ciclo de testes de regressão focado nessas funcionalidades."
