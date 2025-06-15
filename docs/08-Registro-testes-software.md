@@ -12,7 +12,7 @@ Este documento detalha os resultados da execução dos testes definidos no Plano
 
 ### **1. Resumo dos Resultados**
 
-O ciclo de testes foi executado conforme o planejado. A maioria dos casos de teste críticos foi aprovada, porém foram identificadas falhas que necessitam de correção antes da liberação da versão.
+Descrição e Resumo dos Resultados [Escrever após os testes]
 
   * **Total de Casos de Teste Executados:** ???
   * **Aprovados:** ???
