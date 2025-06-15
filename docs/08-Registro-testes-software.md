@@ -74,25 +74,12 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). |  **Aprovado/Reprovado** | - |
 | **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. |  **Aprovado/Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
 
-##### Registro de Evidência
-
-  * **CT05:** [Screenshot da lista de lançamentos com o novo item](https://www.google.com/search?q=https://example.com/evidence/CT05.png)
-  * **CT06:** [Screenshot da tela de listagem completa](https://www.google.com/search?q=https://example.com/evidence/CT06.png)
-  * **CT07:** [Vídeo demonstrando a falha ao inserir valor negativo e o resultado incorreto na lista](https://www.google.com/search?q=https://example.com/evidence/CT07.mp4)
-
 #### **2.3. Acompanhamento Financeiro**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. |  **Aprovado/Reprovado** | - |
 | **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. |  **Aprovado/Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
-
-##### Registro de Evidência
-
-  * **CT08:** [Screenshot do saldo exibido no dashboard](https://www.google.com/search?q=https://example.com/evidence/CT08.png)
-  * **CT09:** [Screenshot comparativo do gráfico e planilha com cálculo manual](https://www.google.com/search?q=https://example.com/evidence/CT09.png)
-
------
 
 ### **3. Resultados Detalhados dos Testes Não Funcionais**
 
@@ -103,20 +90,11 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. |  **Aprovado/Reprovado** | - |
 | **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. |  **Aprovado/Reprovado** | - |
 
-##### Registro de Evidência
-
-  * **NF01:** [Gravação de tela da navegação do usuário (fluxo completo)](https://www.google.com/search?q=https://example.com/evidence/NF01.mp4)
-  * **NF02:** [Screenshot dos indicadores visuais de feedback](https://www.google.com/search?q=https://example.com/evidence/NF02.png)
-
 #### **3.2. Desempenho**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). |  **Aprovado/Reprovado** | Atende ao critério. |
-
-##### Registro de Evidência
-
-  * **NF03:** [Relatório do Google Lighthouse/PageSpeed Insights](https://www.google.com/search?q=https://example.com/evidence/NF03.pdf)
 
 #### **3.3. Segurança**
 
@@ -124,13 +102,6 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). |  **Aprovado/Reprovado** | - |
 | **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. |  **Aprovado/Reprovado** | - |
-
-##### Registro de Evidência
-
-  * **NF04:** [Screenshot (ofuscado) da tabela de usuários no banco de dados mostrando o hash da senha](https://www.google.com/search?q=https://example.com/evidence/NF04.png)
-  * **NF05:** [Screenshot da tela de bloqueio de conta](https://www.google.com/search?q=https://example.com/evidence/NF05.png)
-
------
 
 ### **4. Incidentes Registrados**
 
