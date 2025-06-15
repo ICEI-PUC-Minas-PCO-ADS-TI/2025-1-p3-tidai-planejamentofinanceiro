@@ -73,6 +73,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Lançamento de 'Almoço' (R$ 25,00) adicionado e visível na lista. |  **Aprovado/Reprovado** | - |
 | **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). |  **Aprovado/Reprovado** | - |
 | **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. |  **Aprovado/Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **2.3. Acompanhamento Financeiro**
 
@@ -80,6 +81,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. |  **Aprovado/Reprovado** | - |
 | **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. |  **Aprovado/Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 ### **3. Resultados Detalhados dos Testes Não Funcionais**
 
@@ -89,12 +91,14 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. |  **Aprovado/Reprovado** | - |
 | **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. |  **Aprovado/Reprovado** | - |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **3.2. Desempenho**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). |  **Aprovado/Reprovado** | Atende ao critério. |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **3.3. Segurança**
 
@@ -102,6 +106,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). |  **Aprovado/Reprovado** | - |
 | **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. |  **Aprovado/Reprovado** | - |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 ### **4. Incidentes Registrados**
 
@@ -109,6 +114,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | :--- | :--- | :--- | :--- | :--- |
 | **CW-101** | CT07 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
 | **CW-102** | CT09 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 
 
