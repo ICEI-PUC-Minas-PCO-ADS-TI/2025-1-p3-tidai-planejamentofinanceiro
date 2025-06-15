@@ -64,6 +64,7 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 | **CT02** | Login com credenciais corretas | Redirecionamento para tela principal | Login bem-sucedido. Usuário redirecionado para o dashboard. | **Aprovado** | - |
 | **CT03** | Login com senha incorreta | Exibição de mensagem de erro | Mensagem "E-mail ou senha inválidos" exibida corretamente. | **Aprovado** | - |
 | **CT04** | E-mail inválido no cadastro | Exibição de erro de validação | Mensagem de erro "Formato de e-mail inválido" exibida abaixo do campo. | **Aprovado** | - |
+| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 ##### Registro de Evidência
 
