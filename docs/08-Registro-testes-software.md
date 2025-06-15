@@ -26,3 +26,153 @@ Discorra sobre os resultados do teste, ressaltando os pontos fortes e fracos ide
 
 > **Links úteis**:
 > - [Ferramentas de Teste para JavaScript](https://geekflare.com/javascript-unit-testing/)
+
+Claro\! Adicionei a seção "Registro de Evidência" abaixo de cada tabela de resultados. Esta seção serve para referenciar os artefatos (como screenshots, vídeos ou logs) que comprovam o resultado de cada teste.
+
+-----
+
+### **Registro de Execução de Testes de Software – Projeto Cash Wise**
+
+Este documento detalha os resultados da execução dos testes definidos no Plano de Testes do projeto Cash Wise, com base nos cenários funcionais e não funcionais.
+
+**Informações Gerais do Ciclo de Teste:**
+
+  * **Projeto:** Cash Wise
+  * **Versão do Software:** 1.0.0
+  * **Ciclo de Teste:** Ciclo de Teste de Regressão - Sprint 3
+  * **Data de Execução:** 15/06/2025
+  * **Responsável pela Execução:** [Nome do Tester]
+
+-----
+
+### **1. Resumo dos Resultados**
+
+O ciclo de testes foi executado conforme o planejado. A maioria dos casos de teste críticos foi aprovada, porém foram identificadas falhas que necessitam de correção antes da liberação da versão.
+
+  * **Total de Casos de Teste Executados:** 14
+  * **Aprovados:** 12
+  * **Reprovados:** 2
+  * **Status Geral do Ciclo:** **Reprovado** (Devido à existência de um defeito crítico)
+
+-----
+
+### **2. Resultados Detalhados dos Testes Funcionais**
+
+#### **2.1. Cadastro e Autenticação de Usuário**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CT01** | Cadastro de novo usuário | Usuário cadastrado com sucesso | Usuário cadastrado com sucesso. E-mail de confirmação recebido. | **Aprovado** | - |
+| **CT02** | Login com credenciais corretas | Redirecionamento para tela principal | Login bem-sucedido. Usuário redirecionado para o dashboard. | **Aprovado** | - |
+| **CT03** | Login com senha incorreta | Exibição de mensagem de erro | Mensagem "E-mail ou senha inválidos" exibida corretamente. | **Aprovado** | - |
+| **CT04** | E-mail inválido no cadastro | Exibição de erro de validação | Mensagem de erro "Formato de e-mail inválido" exibida abaixo do campo. | **Aprovado** | - |
+
+##### Registro de Evidência
+
+  * **CT01:** [Screenshot da tela de sucesso pós-cadastro](https://www.google.com/search?q=https://example.com/evidence/CT01.png)
+  * **CT02:** [Screenshot do dashboard após login](https://www.google.com/search?q=https://example.com/evidence/CT02.png)
+  * **CT03:** [Screenshot da mensagem de erro de login](https://www.google.com/search?q=https://example.com/evidence/CT03.png)
+  * **CT04:** [Screenshot da validação do campo de e-mail](https://www.google.com/search?q=https://example.com/evidence/CT04.png)
+
+#### **2.2. Lançamentos Financeiros**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Lançamento de 'Almoço' (R$ 25,00) adicionado e visível na lista. | **Aprovado** | - |
+| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). | **Aprovado** | - |
+| **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. | **Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
+
+##### Registro de Evidência
+
+  * **CT05:** [Screenshot da lista de lançamentos com o novo item](https://www.google.com/search?q=https://example.com/evidence/CT05.png)
+  * **CT06:** [Screenshot da tela de listagem completa](https://www.google.com/search?q=https://example.com/evidence/CT06.png)
+  * **CT07:** [Vídeo demonstrando a falha ao inserir valor negativo e o resultado incorreto na lista](https://www.google.com/search?q=https://example.com/evidence/CT07.mp4)
+
+#### **2.3. Acompanhamento Financeiro**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. | **Aprovado** | - |
+| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. | **Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
+
+##### Registro de Evidência
+
+  * **CT08:** [Screenshot do saldo exibido no dashboard](https://www.google.com/search?q=https://example.com/evidence/CT08.png)
+  * **CT09:** [Screenshot comparativo do gráfico e planilha com cálculo manual](https://www.google.com/search?q=https://example.com/evidence/CT09.png)
+
+-----
+
+### **3. Resultados Detalhados dos Testes Não Funcionais**
+
+#### **3.1. Usabilidade**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. | **Aprovado** | - |
+| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. | **Aprovado** | - |
+
+##### Registro de Evidência
+
+  * **NF01:** [Gravação de tela da navegação do usuário (fluxo completo)](https://www.google.com/search?q=https://example.com/evidence/NF01.mp4)
+  * **NF02:** [Screenshot dos indicadores visuais de feedback](https://www.google.com/search?q=https://example.com/evidence/NF02.png)
+
+#### **3.2. Desempenho**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). | **Aprovado** | Atende ao critério. |
+
+##### Registro de Evidência
+
+  * **NF03:** [Relatório do Google Lighthouse/PageSpeed Insights](https://www.google.com/search?q=https://example.com/evidence/NF03.pdf)
+
+#### **3.3. Segurança**
+
+| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). | **Aprovado** | - |
+| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. | **Aprovado** | - |
+
+##### Registro de Evidência
+
+  * **NF04:** [Screenshot (ofuscado) da tabela de usuários no banco de dados mostrando o hash da senha](https://www.google.com/search?q=https://example.com/evidence/NF04.png)
+  * **NF05:** [Screenshot da tela de bloqueio de conta](https://www.google.com/search?q=https://example.com/evidence/NF05.png)
+
+-----
+
+### **4. Incidentes Registrados**
+
+| ID do Defeito | Caso de Teste Associado | Descrição do Problema | Prioridade | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **CW-101** | CT07 | O sistema aceita valores negativos no cadastro de lançamentos e os converte para positivo, corrompendo a integridade do dado financeiro. | **Crítica** | Aberto |
+| **CW-102** | CT09 | O gráfico de despesas por categoria exibe percentuais incorretos, que não refletem a soma real dos lançamentos. | **Alta** | Aberto |
+
+##### Registro de Evidência
+
+  * **CW-101:** [Link para o ticket no Jira/Azure DevOps](https://www.google.com/search?q=https://example.com/tickets/CW-101)
+  * **CW-102:** [Link para o ticket no Jira/Azure DevOps](https://www.google.com/search?q=https://example.com/tickets/CW-102)
+
+-----
+
+### **5. Conclusão e Recomendações**
+
+O ciclo de testes não atendeu a todos os critérios de aceitação definidos no plano, especificamente:
+
+  * "Todos os testes críticos devem ser aprovados" (CT07 reprovado).
+  * "Nenhum erro de alta prioridade pode permanecer sem correção" (CT09 reprovado).
+
+**Recomendação:** A versão **não está apta** para ser liberada para produção. Recomenda-se a correção dos defeitos **CW-101** e **CW-102** pela equipe de desenvolvimento e a execução de um novo ciclo de testes de regressão focado nessas funcionalidades.
+
+-----
+
+**Assinaturas:**
+
+-----
+
+**[Nome do Tester]**
+*Analista de Testes*
+
+-----
+
+**[Nome do Gerente de Testes/Projeto]**
+*Gerente de Qualidade*
