@@ -1,36 +1,3 @@
-# Registro de testes de software
-
-<span style="color:red">Pré-requisitos: <a href="04-Projeto-interface.md"> Projeto de interface</a></span>, <a href="07-Plano-testes-software.md"> Plano de testes de software</a>
-
-Relatório com as evidências dos testes de software realizados no sistema pela equipe, baseado em um plano de testes pré-definido.
-
-Para cada caso de teste definido no <a href="07-Plano-testes-software.md"> Plano de testes de software</a>, realize o registro das evidências dos testes feitos na aplicação pela equipe, que comprovem que o critério de êxito foi alcançado (ou não!). Para isso, utilize uma ferramenta de captura de tela que mostre cada um dos casos de teste definidos. Observação: cada caso de teste deverá possuir um vídeo do tipo _screencast_ para caracterizar uma evidência do referido caso.
-
-| **Caso de teste** 	| **CT-001 – Cadastrar perfil** 	|
-|:---:	|:---:	|
-| Requisito associado | RF-00X - A aplicação deve apresentar, na página principal, a funcionalidade de cadastro de usuários para que esses consigam criar e gerenciar seu perfil. |
-| Registro de evidência | [www.teste.com.br/drive/ct-01](http://www.teste.com.br/drive/ct-01) |
-
-| **Caso de teste** 	| **CT-002 – Realizar login** 	|
-|:---:	|:---:	|
-| Requisito associado | RF-00Y - A aplicação deve permitir que um usuário previamente cadastrado faça login. |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
-
-
-> **Links úteis**:
-> - [Screencast: entenda o que é e como gravar vídeos com ele](https://rockcontent.com/br/blog/screencast/) 
-
-## Avaliação
-
-Discorra sobre os resultados do teste, ressaltando os pontos fortes e fracos identificados na solução. Comente como o grupo pretende abordar esses pontos nas próximas iterações. Apresente as falhas detectadas e as melhorias geradas a partir dos resultados obtidos nos testes.
-
-> **Links úteis**:
-> - [Ferramentas de Teste para JavaScript](https://geekflare.com/javascript-unit-testing/)
-
-Claro\! Adicionei a seção "Registro de Evidência" abaixo de cada tabela de resultados. Esta seção serve para referenciar os artefatos (como screenshots, vídeos ou logs) que comprovam o resultado de cada teste.
-
------
-
 ### **Registro de Execução de Testes de Software – Projeto Cash Wise**
 
 Este documento detalha os resultados da execução dos testes definidos no Plano de Testes do projeto Cash Wise, com base nos cenários funcionais e não funcionais.
@@ -70,17 +37,17 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Lançamento de 'Almoço' (R$ 25,00) adicionado e visível na lista. |  **Aprovado/Reprovado** | - |
-| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Todos os lançamentos foram exibidos na ordem correta (mais recente primeiro). |  **Aprovado/Reprovado** | - |
-| **CT07** | Validação de valor negativo | Exibição de erro de validação | O sistema permitiu o cadastro do valor negativo (-50). O valor foi salvo como positivo (50) na listagem. |  **Aprovado/Reprovado** | **Falha Crítica.** O sistema não validou a entrada e corrompeu o dado. Defeito registrado: **CW-101**. |
+| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Resultado Obtido |  **Aprovado/Reprovado** | - |
+| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Resultado Obtido |  **Aprovado/Reprovado** | - |
+| **CT07** | Validação de valor negativo | Exibição de erro de validação | Resultado Obtido |  **Aprovado/Reprovado** | - |
 | Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **2.3. Acompanhamento Financeiro**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Saldo geral calculado e exibido corretamente, refletindo todos os lançamentos. |  **Aprovado/Reprovado** | - |
-| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Gráfico de pizza foi gerado, mas os percentuais não correspondem ao cálculo manual dos dados. |  **Aprovado/Reprovado** | **Falha de Alta Prioridade.** O cálculo do gráfico está incorreto. Defeito registrado: **CW-102**. |
+| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Resultado Obtido |  **Aprovado/Reprovado** | - |
+| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Resultado Obtido |  **Aprovado/Reprovado** | - |
 | Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 ### **3. Resultados Detalhados dos Testes Não Funcionais**
@@ -89,23 +56,23 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Fluxos principais foram concluídos sem necessidade de documentação. |  **Aprovado/Reprovado** | - |
-| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Mensagens de sucesso (verde) e erro (vermelho) são claras. |  **Aprovado/Reprovado** | - |
+| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Resultado Obtido |  **Aprovado/Reprovado** | - |
+| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Resultado Obtido |  **Aprovado/Reprovado** | - |
 | Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **3.2. Desempenho**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Tempo de carregamento inicial medido em 2.7 segundos (conexão 100Mbps). |  **Aprovado/Reprovado** | Atende ao critério. |
+| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Resultado Obtido |  **Aprovado/Reprovado** | - |
 | Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 #### **3.3. Segurança**
 
 | ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Verificado no banco de dados que a senha do usuário está hasheada (bcrypt). |  **Aprovado/Reprovado** | - |
-| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Após 5 tentativas erradas, a conta foi bloqueada por 15 minutos, conforme esperado. |  **Aprovado/Reprovado** | - |
+| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Resultado Obtido |  **Aprovado/Reprovado** | - |
+| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Resultado Obtido |  **Aprovado/Reprovado** | - |
 | Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
 
 ### **4. Incidentes Registrados**
