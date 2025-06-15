@@ -28,47 +28,50 @@ document.addEventListener('DOMContentLoaded', async () => {
       const res = await fetch('http://localhost:5284/Transacao');
       const transacoes = await res.json();
 
+      // Filtra transações do usuário atual
       const minhasTransacoes = transacoes.filter(t => t.usuarioFK === usuario.idUsuario);
 
-      let ganhos = 0, gastos = 0, investido = 0, lazer = 0;
+      // Inicializa os valores
+      let salarioAtual = 0, gastosNoMes = 0, quantoQuerInvestir = 0, lazer = 0;
 
+      // Para cada transação, pega o valor conforme a descrição atualizada
       minhasTransacoes.forEach(t => {
-        const valor = parseFloat(t.valorTrans);
-        switch (t.descricaoCont) {
-          case 'Total de Ganhos':
-            ganhos += valor;
+        const valor = parseFloat(t.valorTrans) || 0;
+        switch(t.descricaoCont) {
+          case 'Salário Atual':
+            salarioAtual += valor;
             break;
-          case 'Total de Gastos':
-            gastos += valor;
+          case 'Gastos no Mês':
+            gastosNoMes += valor;
             break;
-          case 'Total Investido':
-            investido += valor;
+          case 'Quanto Quer Investir':
+            quantoQuerInvestir += valor;
             break;
-          case 'Lazer Disponível':
+          case 'Lazer':
             lazer += valor;
             break;
         }
       });
 
-      gerarGraficos(ganhos, gastos, investido, lazer);
+      gerarGraficos(salarioAtual, gastosNoMes, quantoQuerInvestir, lazer);
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
       alert('Erro ao buscar transações.');
     }
   }
 
-  function gerarGraficos(ganhos, gastos, investido, lazer) {
-    const dados = [ganhos, gastos, investido, lazer];
-    const labels = ['Ganhos', 'Gastos', 'Investido', 'Lazer'];
+  function gerarGraficos(salarioAtual, gastosNoMes, quantoQuerInvestir, lazer) {
+    const dados = [salarioAtual, gastosNoMes, quantoQuerInvestir, lazer];
+    const labels = ['Salário Atual', 'Gastos no Mês', 'Quanto Quer Investir', 'Lazer'];
     const cores = ['#4CAF50', '#F44336', '#2196F3', '#FF9800'];
 
     // Gráfico de Coluna
     new Chart(coluna, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels,
         datasets: [{
-          label: '', // removido para não mostrar legenda lateral
+          label: '',
           data: dados,
           backgroundColor: cores
         }]
@@ -115,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         plugins: {
           title: {
             display: true,
-            text: 'Distribuição das Transações'
+            text: 'Distribuição das Categorias'
           },
           tooltip: {
             callbacks: {
@@ -126,15 +129,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    // Gráfico Comparativo Simples (Ganhos vs Gastos Totais)
-    const gastosTotais = gastos + investido + lazer;
+    // Gráfico Comparativo (Salário vs Gastos + Investimentos + Lazer)
+    const totalGastos = gastosNoMes + quantoQuerInvestir + lazer;
 
     new Chart(comparativo, {
       type: 'bar',
       data: {
-        labels: ['Ganhos', 'Gastos Totais'],
+        labels: ['Salário Atual', 'Total Gastos'],
         datasets: [{
-          data: [ganhos, gastosTotais],
+          data: [salarioAtual, totalGastos],
           backgroundColor: ['#4CAF50', '#F44336']
         }]
       },
@@ -143,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         plugins: {
           title: {
             display: true,
-            text: 'Comparativo de Ganhos e Gastos Totais'
+            text: 'Comparativo Salário e Gastos Totais'
           },
           tooltip: {
             callbacks: {

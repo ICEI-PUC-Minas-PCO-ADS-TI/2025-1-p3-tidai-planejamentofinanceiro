@@ -10,22 +10,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   const lazerDisponivel = $('lazer-disponivel');
   const corpoTabela = document.querySelector('tbody');
 
-  function formatarReal(valor) {
+  const formatarReal = valor => {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
+  };
 
-  function obterUsuarioLogado() {
+  const obterUsuarioLogado = () => {
     const usuario = localStorage.getItem('usuarioLogado');
     return usuario ? JSON.parse(usuario) : null;
-  }
+  };
 
   async function carregarDados() {
     const usuario = obterUsuarioLogado();
     if (!usuario) return alert('Usuário não encontrado.');
 
-    // Atualiza nome e info do perfil
-    spanName.textContent = usuario.nomeUsuario;
-    spanAge.textContent = localStorage.getItem('idadeUsuario') + ' anos' || '';
+    // Atualiza dados do perfil
+    spanName.textContent = usuario.nomeUsuario || 'Usuário';
+    spanAge.textContent = (localStorage.getItem('idadeUsuario') || '') + ' anos';
     spanPeriod.textContent = localStorage.getItem('periodoUsuario') || '';
 
     try {
@@ -39,30 +39,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (minhasTransacoes.length === 0) {
         corpoTabela.innerHTML = '<tr><td colspan="3" class="text-center">Nenhuma transação encontrada.</td></tr>';
+        atualizarCards(ganhos, gastos, investido, lazer);
         return;
       }
 
       minhasTransacoes.forEach(t => {
         const data = new Date(t.dataTrans).toLocaleDateString('pt-BR');
-        const valor = parseFloat(t.valorTrans);
+        const valor = Math.abs(parseFloat(t.valorTrans)) || 0; // valor absoluto e fallback 0
 
         let cor = 'text-danger';
         let prefixo = '-';
 
-        // Define categoria e soma em grupo
         switch (t.descricaoCont) {
-          case 'Total de Ganhos':
+          case 'Salario Atual':
+          case 'Salário Atual': // tratar ambas variações
             ganhos += valor;
             cor = 'text-success';
             prefixo = '+';
             break;
-          case 'Total de Gastos':
+          case 'Gastos no Mês':
             gastos += valor;
             break;
-          case 'Total Investido':
+          case 'Quanto Quer Investir':
             investido += valor;
             break;
-          case 'Lazer Disponível':
+          case 'Lazer':
             lazer += valor;
             break;
         }
@@ -76,24 +77,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         corpoTabela.appendChild(linha);
       });
 
-      // Adiciona linha total
       const totalFinal = ganhos - gastos - investido - lazer;
+
       const linhaTotal = document.createElement('tr');
       linhaTotal.innerHTML = `
-        <td colspan="2" class="text-end fw-bold">Total:</td>
+        <td colspan="2" class="text-end fw-bold">Total Disponível:</td>
         <td class="fw-bold ${totalFinal >= 0 ? 'text-success' : 'text-danger'}">${formatarReal(totalFinal)}</td>
       `;
       corpoTabela.appendChild(linhaTotal);
 
-      // Atualiza os cards
-      totalGanhos.textContent = formatarReal(ganhos);
-      totalGastos.textContent = formatarReal(gastos);
-      totalInvestido.textContent = formatarReal(investido);
-      lazerDisponivel.textContent = formatarReal(lazer);
+      atualizarCards(ganhos, gastos, investido, lazer);
+
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
       alert('Erro ao buscar transações.');
     }
+  }
+
+  function atualizarCards(ganhos, gastos, investido, lazer) {
+    totalGanhos.textContent = formatarReal(ganhos);
+    totalGastos.textContent = formatarReal(gastos);
+    totalInvestido.textContent = formatarReal(investido);
+    lazerDisponivel.textContent = formatarReal(lazer);
   }
 
   carregarDados();

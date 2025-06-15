@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const $ = id => document.getElementById(id);
 
   const spanName   = $('user-name');
@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputAvatar = $('avatarInput');
   const avatarImg = $('admin-avatar');
 
+  const API_URL = 'http://localhost:5284';
+
   const formatarReal = valor => {
     const num = typeof valor === 'number' ? valor : parseFloat(String(valor).replace(/\./g, '').replace(',', '.'));
     if (isNaN(num)) return 'R$ 0,00';
@@ -52,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     totalInvestido.textContent  = formatarReal(localStorage.getItem('totalInvestido') ?? '0,00');
     lazerDisponivel.textContent = formatarReal(localStorage.getItem('lazerDisponivel') ?? '0,00');
 
-    // Avatar salvo no localStorage
     const avatarSalvo = localStorage.getItem('avatarUsuario');
     if (avatarSalvo) avatarImg.src = avatarSalvo;
   }
@@ -72,10 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hideModal = () => modal.classList.remove('d-flex');
 
+  // 🛠️ Função para buscar transações do usuário atual
+  async function buscarTransacoes() {
+    const res = await fetch(`${API_URL}/Transacao`);
+    const todas = await res.json();
+    return todas.filter(t => t.usuarioFK === usuario.idUsuario);
+  }
+
+  // 🔥 Salvar perfil e transações
   const saveProfile = async () => {
     const name = inName.value.trim();
     const age = inAge.value.trim();
     const period = inPeriod.value.trim();
+
     const ganhos = inGanhos.value.trim();
     const gastos = inGastos.value.trim();
     const investido = inInvestido.value.trim();
@@ -89,34 +99,53 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      await fetch(`http://localhost:5284/Usuario/${usuario.idUsuario}`, {
+      // Atualizar nome do usuário no backend
+      await fetch(`${API_URL}/Usuario/${usuario.idUsuario}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(usuarioAtualizado)
       });
 
-      const transacoes = [
-        { descricaoCont: 'Total de Ganhos',   valorTrans: ganhos },
-        { descricaoCont: 'Total de Gastos',   valorTrans: gastos },
-        { descricaoCont: 'Total Investido',   valorTrans: investido },
-        { descricaoCont: 'Lazer Disponível',  valorTrans: lazer }
+      // Buscar transações existentes
+      const transacoesExistentes = await buscarTransacoes();
+
+      const categorias = [
+        { descricao: 'Salário Atual',   valor: ganhos },
+        { descricao: 'Gastos no Mês',   valor: gastos },
+        { descricao: 'Quanto Quer Investir', valor: investido },
+        { descricao: 'Lazer',            valor: lazer }
       ];
 
-      for (const trans of transacoes) {
-        await fetch('http://localhost:5284/Transacao', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...trans,
-            tipoTrans: '',
-            dataTrans: now,
-            valorTrans: Number(trans.valorTrans.replace(/\./g, '').replace(',', '.')) || 0,
-            usuarioFK: usuario.idUsuario
-          })
-        });
+      // Para cada categoria, atualiza ou cria
+      for (const cat of categorias) {
+        const existente = transacoesExistentes.find(t => t.descricaoCont === cat.descricao);
+
+        const corpo = {
+          descricaoCont: cat.descricao,
+          tipoTrans: '',
+          dataTrans: now,
+          valorTrans: parseFloat(cat.valor.replace(/\./g, '').replace(',', '.')) || 0,
+          usuarioFK: usuario.idUsuario
+        };
+
+        if (existente) {
+          // Se existe, atualiza (PUT)
+          await fetch(`${API_URL}/Transacao/${existente.idTrans}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...existente, ...corpo })
+          });
+        } else {
+          // Se não, cria (POST)
+          await fetch(`${API_URL}/Transacao`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(corpo)
+          });
+        }
       }
 
-      // Atualiza os dados locais
+      // Atualiza LocalStorage
       localStorage.setItem('usuarioLogado', JSON.stringify(usuarioAtualizado));
       localStorage.setItem('idadeUsuario', age);
       localStorage.setItem('periodoUsuario', period);
@@ -127,26 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       carregarPerfil();
       hideModal();
+
+      alert('✅ Dados atualizados com sucesso!');
     } catch (err) {
       alert('❌ Erro ao salvar alterações.');
       console.error(err);
     }
   };
 
-  // Eventos do modal
-  btnEdit     .addEventListener('click', () => showModal('name'));
-  btnEditStats.addEventListener('click', () => showModal('stats'));
-  btnClose    .addEventListener('click', hideModal);
-  btnSave     .addEventListener('click', saveProfile);
-  modal.addEventListener('click', e => { if (!modalContent.contains(e.target)) hideModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
-
-  // Evento para abrir input de avatar
+  // 🖼️ Evento para trocar o avatar
   btnChangeAvatar?.addEventListener('click', () => {
     inputAvatar.click();
   });
 
-  // Evento para mudar imagem e salvar no localStorage
   inputAvatar?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -157,6 +179,20 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('avatarUsuario', reader.result);
     };
     reader.readAsDataURL(file);
+  });
+
+  // 🔗 Eventos dos botões
+  btnEdit     .addEventListener('click', () => showModal('name'));
+  btnEditStats.addEventListener('click', () => showModal('stats'));
+  btnClose    .addEventListener('click', hideModal);
+  btnSave     .addEventListener('click', saveProfile);
+
+  modal.addEventListener('click', e => {
+    if (!modalContent.contains(e.target)) hideModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') hideModal();
   });
 
   carregarPerfil();
