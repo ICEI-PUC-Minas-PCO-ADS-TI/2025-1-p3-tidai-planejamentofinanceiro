@@ -136,35 +136,18 @@ O ciclo de testes foi executado conforme o planejado. A maioria dos casos de tes
 
 | ID do Defeito | Caso de Teste Associado | Descrição do Problema | Prioridade | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **CW-101** | CT07 | O sistema aceita valores negativos no cadastro de lançamentos e os converte para positivo, corrompendo a integridade do dado financeiro. | **Crítica** | Aberto |
-| **CW-102** | CT09 | O gráfico de despesas por categoria exibe percentuais incorretos, que não refletem a soma real dos lançamentos. | **Alta** | Aberto |
+| **CW-101** | CT07 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
+| **CW-102** | CT09 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
 
-##### Registro de Evidência
 
-  * **CW-101:** [Link para o ticket no Jira/Azure DevOps](https://www.google.com/search?q=https://example.com/tickets/CW-101)
-  * **CW-102:** [Link para o ticket no Jira/Azure DevOps](https://www.google.com/search?q=https://example.com/tickets/CW-102)
-
------
 
 ### **5. Conclusão e Recomendações**
 
+Exemplo Texto:
+"
 O ciclo de testes não atendeu a todos os critérios de aceitação definidos no plano, especificamente:
 
   * "Todos os testes críticos devem ser aprovados" (CT07 reprovado).
   * "Nenhum erro de alta prioridade pode permanecer sem correção" (CT09 reprovado).
-
-**Recomendação:** A versão **não está apta** para ser liberada para produção. Recomenda-se a correção dos defeitos **CW-101** e **CW-102** pela equipe de desenvolvimento e a execução de um novo ciclo de testes de regressão focado nessas funcionalidades.
-
------
-
-**Assinaturas:**
-
------
-
-**[Nome do Tester]**
-*Analista de Testes*
-
------
-
-**[Nome do Gerente de Testes/Projeto]**
-*Gerente de Qualidade*
+"
+**Recomendação:** Exemplo Texto: "A versão **não está apta** para ser liberada para produção. Recomenda-se a correção dos defeitos **CW-101** e **CW-102** pela equipe de desenvolvimento e a execução de um novo ciclo de testes de regressão focado nessas funcionalidades."
