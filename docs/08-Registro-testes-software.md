@@ -38,10 +38,8 @@ Este documento detalha os resultados da execução dos testes definidos no Plano
 **Informações Gerais do Ciclo de Teste:**
 
   * **Projeto:** Cash Wise
-  * **Versão do Software:** 1.0.0
-  * **Ciclo de Teste:** Ciclo de Teste de Regressão - Sprint 3
   * **Data de Execução:** 15/06/2025
-  * **Responsável pela Execução:** [Nome do Tester]
+  * **Responsável pela Execução:** Gabriel Henrique Medice Marçal
 
 -----
 
@@ -49,10 +47,10 @@ Este documento detalha os resultados da execução dos testes definidos no Plano
 
 O ciclo de testes foi executado conforme o planejado. A maioria dos casos de teste críticos foi aprovada, porém foram identificadas falhas que necessitam de correção antes da liberação da versão.
 
-  * **Total de Casos de Teste Executados:** 14
-  * **Aprovados:** 12
-  * **Reprovados:** 2
-  * **Status Geral do Ciclo:** **Reprovado** (Devido à existência de um defeito crítico)
+  * **Total de Casos de Teste Executados:** ???
+  * **Aprovados:** ???
+  * **Reprovados:** ???
+  * **Status Geral do Ciclo:** **Reprovado/Aprovado** (Motivações)
 
 -----
 
