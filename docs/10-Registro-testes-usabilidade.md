@@ -10,7 +10,7 @@ Após realizar os testes de usabilidade, obtém-se um relatório a partir das an
 
 | Usuário | Taxa de sucesso | Satisfação subjetiva | Tempo para conclusão do cenário |
 |---------|-----------------|----------------------|---------------------------------|
-| 1 (Sergio)       | SIM             | 4                    | 35~ segundos                  |
+| 1 (David Fontana)       | SIM             | 4                    | 35~ segundos                  |
 | 2 (Juliana)       | SIM             | 5                    | 30~ segundos                  |
 | 3 (Igor)       | SIM             | 3                    | 46~ segundos                  |
 |         |                 |                      |                                 |
@@ -28,7 +28,7 @@ Após realizar os testes de usabilidade, obtém-se um relatório a partir das an
 
 | Usuário | Taxa de sucesso | Satisfação subjetiva | Tempo para conclusão do cenário |
 |---------|-----------------|----------------------|---------------------------------|
-| 1 (Sergio)      | SIM             | 5                    | 18~ segundos                  |
+| 1 (David Fontana)      | SIM             | 5                    | 18~ segundos                  |
 | 2 (Juliana)       | SIM             | 4                    | 22~ segundos                  |
 | 3 (Igor)      | SIM             | 4                    | 20~ segundos                  |
 |         |                 |                      |                                 |
@@ -45,7 +45,7 @@ Após realizar os testes de usabilidade, obtém-se um relatório a partir das an
 
 | Usuário | Taxa de sucesso | Satisfação subjetiva | Tempo para conclusão do cenário |
 |---------|-----------------|----------------------|---------------------------------|
-| 1 (Sergio)       | SIM             | 4                    | 25~ segundos                  |
+| 1 (David Fontana)       | SIM             | 4                    | 25~ segundos                  |
 | 2 (Juliana)      | SIM             | 4                    | 28~ segundos                  |
 | 3 (Igor)      | SIM             | 5                    | 23~ segundos                  |
 |         |                 |                      |                                 |
