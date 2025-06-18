@@ -114,49 +114,52 @@ O ciclo de testes foi bem-sucedido, com a maioria das funcionalidades operando c
 
 ---
 
-# 🧾 **6. Testes Individuais – Avaliação de Usuários**
+
+---
+
+## 🧾 **6. Testes Individuais – Avaliação de Usuários**
 
 ### 👤 Wagner Ribeiro
 
-#### Funcionalidades Testadas:
-- Cadastro de Perfil (CT-001): Sucesso no cadastro, campos salvos corretamente, opção de edição funcional.
-- Login (CT-002): Acesso com sucesso, redirecionamento para dashboard, dados exibidos corretamente.
-- Lançamentos (CT-003): Corrigido bug de duplicação, valores atualizam corretamente no modal.
-- Perfil Financeiro (CT-004): Feedback como “Você precisa melhorar sua vida financeira”.
-- Dashboard (CT-005): Dados exibidos, gráficos organizados, áreas visuais ainda com necessidade de ajustes.
+| Funcionalidade | Resultado | Observações |
+|----------------|-----------|-------------|
+| Cadastro de Perfil (CT-001) | ✅ Sucesso | Campos salvos corretamente, edição funcional |
+| Login (CT-002)              | ✅ Sucesso | Redirecionamento e dados exibidos |
+| Lançamentos (CT-003)        | ✅ Corrigido | Bug de duplicação resolvido |
+| Perfil Financeiro (CT-004)  | ✅ Feedback exibido | “Você precisa melhorar sua vida financeira” |
+| Dashboard (CT-005)          | ⚠ Parcial | Áreas visuais ainda precisam de ajustes |
 
-#### Avaliação:
-- **Pontos Fortes:** Melhoria no formulário, estrutura do blog no topo, correções visuais eficazes.
-- **Pontos a Melhorar:** Dados zerados em telas específicas, conteúdo do blog no rodapé, redundância de botões (“Home” e “Sair”).
+**Pontos Fortes:** Melhoria no formulário, blog superior estruturado  
+**Pontos a Melhorar:** Dados zerados, conteúdo no rodapé, redundância “Home” e “Sair”
 
 ---
 
 ### 👩 Clara Eckel
 
-#### Funcionalidades Testadas:
-- Cadastro de Perfil (CT-001): Cadastro funcional e edição operante.
-- Login (CT-002): Login bem-sucedido com dados exibidos.
-- Lançamentos (CT-003): Registro correto, sem sobreposição.
-- Perfil Financeiro (CT-004): Feedback positivo conforme dados (“Você está no caminho certo”).
-- Dashboard (CT-005): Exibição de gráficos em barra/pizza com dados consistentes.
+| Funcionalidade | Resultado | Observações |
+|----------------|-----------|-------------|
+| Cadastro de Perfil (CT-001) | ✅ Sucesso | Funcional e edição operante |
+| Login (CT-002)              | ✅ Sucesso | Dashboard exibido corretamente |
+| Lançamentos (CT-003)        | ✅ Correto | Sem sobreposição |
+| Perfil Financeiro (CT-004)  | ✅ Feedback exibido | “Você está no caminho certo” |
+| Dashboard (CT-005)          | ✅ Gráficos | Barra e pizza organizados |
 
-#### Avaliação:
-- **Pontos Fortes:** Simplicidade e fluidez no uso.
-- **Pontos a Melhorar:** Mais campos no perfil (profissão, metas), conteúdo no rodapé do site, sugestões no feedback.
+**Pontos Fortes:** Fluidez de uso  
+**Pontos a Melhorar:** Mais campos no perfil, conteúdo no rodapé, sugestões no feedback
 
 ---
 
 ### 👨‍💻 Pablo Marques
 
-#### Funcionalidades Testadas:
-- Cadastro de Perfil (CT-001): Dados corretos e edição funcional.
-- Login (CT-002): Dashboard acessado com sucesso.
-- Lançamentos (CT-003): Atualização consistente dos valores.
-- Perfil Financeiro (CT-004): Feedback crítico (“Você precisa melhorar sua vida financeira”).
-- Dashboard (CT-005): Gráficos funcionais e dados completos.
+| Funcionalidade | Resultado | Observações |
+|----------------|-----------|-------------|
+| Cadastro de Perfil (CT-001) | ✅ Sucesso | Dados corretos e edição funcional |
+| Login (CT-002)              | ✅ Sucesso | Acesso ao dashboard |
+| Lançamentos (CT-003)        | ✅ Correto | Atualização consistente |
+| Perfil Financeiro (CT-004)  | ✅ Feedback exibido | “Você precisa melhorar sua vida financeira” |
+| Dashboard (CT-005)          | ✅ Gráficos | Dados completos e organizados |
 
-#### Avaliação:
-- **Pontos Fortes:** Cadastro funcional, alertas claros, gráficos bem estruturados.
-- **Pontos a Melhorar:** Personalização do perfil (foto), conteúdo do rodapé, reposicionamento de botões de navegação.
+**Pontos Fortes:** Cadastro sem erros, alertas claros, boa visualização de gráficos  
+**Pontos a Melhorar:** Personalização visual, conteúdo no rodapé, botões reposicionados
 
 ---
