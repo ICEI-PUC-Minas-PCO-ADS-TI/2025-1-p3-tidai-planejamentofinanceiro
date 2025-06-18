@@ -1,0 +1,198 @@
+<!-- Estrutura base HTML para as 4 páginas do painel de administrador Cash Wise -->
+
+<!-- 1. Gerenciar Logins -->
+<!-- Arquivo: /Adm-Gerenciar-Logins/Logins.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciar Logins - Cash Wise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cw-primary:#2d3e50;}
+    body{font-family:Arial,Helvetica,sans-serif;background:#f1f1f1;color:#333;}
+    header{background:#2d3e50;color:#f8f2f2;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
+    .navbar{background:#444a54;}
+    .nav-link{color:#fff!important;}
+    .nav-link:hover{opacity:.8;}
+    .btn-success{background:#4CAF50;border:none;}
+    .btn-success:hover{background:#45a049;}
+    footer{background:#2d3e50;color:#fff;padding:10px 10px;margin-top:auto;text-align:center;}
+  </style>
+</head>
+<body class="p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gerenciar Logins</h2>
+    <button class="btn btn-danger" onclick="logout()">Sair</button>
+  </div>
+  <table class="table table-bordered table-hover bg-white shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="usuarios-table"></tbody>
+  </table>
+  <script>
+    fetch('http://localhost:5284/Usuario')
+      .then(res => res.json())
+      .then(usuarios => {
+        const tabela = document.getElementById('usuarios-table');
+        usuarios.forEach(u => {
+          tabela.innerHTML += `
+            <tr>
+              <td>${u.idUsuario}</td>
+              <td>${u.nomeUsuario}</td>
+              <td>${u.emailUsuario}</td>
+              <td>
+                <button class="btn btn-sm btn-warning">Editar</button>
+                <button class="btn btn-sm btn-danger">Remover</button>
+              </td>
+            </tr>`;
+        });
+      });
+
+    function logout() {
+      sessionStorage.removeItem('usuarioLogado');
+      localStorage.removeItem('usuarioLogado');
+      localStorage.removeItem('usuarioLogadoId');
+      window.location.href = '../Login/login.html';
+    }
+  </script>
+  <footer class="mt-5">2025 &copy; Cash Wise - TIADAI</footer>
+</body>
+</html>
+
+<!-- 2. Gerenciar Conteúdo -->
+<!-- Arquivo: /Adm-Gerenciar-Conteudo/Conteudo.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciar Conteúdo - Cash Wise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cw-primary:#2d3e50;}
+    body{font-family:Arial,Helvetica,sans-serif;background:#f1f1f1;color:#333;}
+    header{background:#2d3e50;color:#f8f2f2;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
+    .navbar{background:#444a54;}
+    .nav-link{color:#fff!important;}
+    .nav-link:hover{opacity:.8;}
+    .btn-success{background:#4CAF50;border:none;}
+    .btn-success:hover{background:#45a049;}
+    footer{background:#2d3e50;color:#fff;padding:10px 10px;margin-top:auto;text-align:center;}
+  </style>
+</head>
+<body class="p-4">
+  <h2 class="mb-4">Gerenciar Conteúdo</h2>
+  <button class="btn btn-success mb-3">Adicionar Novo Post</button>
+  <div id="conteudo-lista">
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5 class="card-title">Post Exemplo</h5>
+        <p class="card-text">Conteúdo do post...</p>
+        <button class="btn btn-sm btn-warning">Editar</button>
+        <button class="btn btn-sm btn-danger">Remover</button>
+      </div>
+    </div>
+  </div>
+  <footer class="mt-5">2025 &copy; Cash Wise - TIADAI</footer>
+</body>
+</html>
+
+<!-- 3. Editar Perfil -->
+<!-- Arquivo: /Adm-Editar-Perfil/EditarPerfil.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil - Cash Wise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cw-primary:#2d3e50;}
+    body{font-family:Arial,Helvetica,sans-serif;background:#f1f1f1;color:#333;}
+    header{background:#2d3e50;color:#f8f2f2;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
+    .navbar{background:#444a54;}
+    .nav-link{color:#fff!important;}
+    .nav-link:hover{opacity:.8;}
+    .btn-success{background:#4CAF50;border:none;}
+    .btn-success:hover{background:#45a049;}
+    footer{background:#2d3e50;color:#fff;padding:10px 10px;margin-top:auto;text-align:center;}
+  </style>
+</head>
+<body class="p-4">
+  <h2 class="mb-4">Editar Perfil</h2>
+  <form id="form-editar">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" value="Christiano">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" value="admin@cashwise.com">
+    </div>
+    <button type="submit" class="btn btn-success">Salvar alterações</button>
+  </form>
+  <script>
+    document.getElementById('form-editar').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Perfil atualizado com sucesso (simulado).');
+    });
+  </script>
+  <footer class="mt-5">2025 &copy; Cash Wise - TIADAI</footer>
+</body>
+</html>
+
+<!-- 4. Alterar Senha -->
+<!-- Arquivo: /Adm-Redefinir-Senha/AlterarSenha.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Alterar Senha - Cash Wise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cw-primary:#2d3e50;}
+    body{font-family:Arial,Helvetica,sans-serif;background:#f1f1f1;color:#333;}
+    header{background:#2d3e50;color:#f8f2f2;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
+    .navbar{background:#444a54;}
+    .nav-link{color:#fff!important;}
+    .nav-link:hover{opacity:.8;}
+    .btn-success{background:#4CAF50;border:none;}
+    .btn-success:hover{background:#45a049;}
+    footer{background:#2d3e50;color:#fff;padding:10px 10px;margin-top:auto;text-align:center;}
+  </style>
+</head>
+<body class="p-4">
+  <h2 class="mb-4">Alterar Senha</h2>
+  <form id="form-senha">
+    <div class="mb-3">
+      <label class="form-label">Senha atual</label>
+      <input type="password" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nova senha</label>
+      <input type="password" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Confirmar nova senha</label>
+      <input type="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar nova senha</button>
+  </form>
+  <script>
+    document.getElementById('form-senha').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Senha alterada com sucesso (simulado).');
+    });
+  </script>
+  <footer class="mt-5">2025 &copy; Cash Wise - TIADAI</footer>
+</body>
+</html>

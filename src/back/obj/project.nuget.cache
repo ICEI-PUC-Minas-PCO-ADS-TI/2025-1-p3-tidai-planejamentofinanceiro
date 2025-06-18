@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Kqr9uhQkeXE=",
+  "dgSpecHash": "yiy0I6gFU7M=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Luiz\\Desktop\\Main\\2025-1-p3-tidai-Grupo2\\src\\back\\CashWiseAPI.csproj",
+  "projectFilePath": "C:\\Users\\Luiz\\Desktop\\Novo repository\\2025-1-p3-tidai-planejamentofinanceiro\\src\\back\\CashWiseAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Luiz\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
     "C:\\Users\\Luiz\\.nuget\\packages\\k4os.compression.lz4\\1.3.5\\k4os.compression.lz4.1.3.5.nupkg.sha512",

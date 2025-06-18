@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário - CashWise</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== Reset e base ========================================== */
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+        :root{
+          --cw-primary:#2d3e50;
+          --cw-accent:#4CAF50;
+        }
+        body{
+          font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;
+          background-color: #f8f9fa;
+        }
+
+        header{
+          background:#2d3e50;color:#f8f2f2;
+          padding:15px 20px;display:flex;justify-content:space-between;align-items:center;
+        }
+
+        /* ===== Navegação & botões ==================================== */
+        .navbar {
+          background: #2d3e50;;
+        }
+        .nav-link{color:#fff!important;}
+        .nav-link:hover{opacity:.8;}
+        .btn-success{background:#45a049;border:none;}
+
+        /* ===== Cartão de perfil ====================================== */
+        .profile-card{border-radius:12px;}
+        .avatar{
+          width:96px;height:96px;border-radius:50%;
+          object-fit:cover;background:#fff;
+        }
+
+        /* ===== Estatísticas ========================================== */
+        .stat-card {
+          background: #e9f2fa;
+          border-radius: 14px;
+          min-height: 120px;
+          transition: box-shadow 0.2s;
+          border: 1.5px solid #b3d1e6;
+          margin-bottom: 10px;
+        }
+        .stat-card:hover {
+          box-shadow: 0 4px 24px rgba(44, 130, 201, 0.10);
+        }
+        .stat-title {
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 1px;
+          margin-bottom: 0.5rem;
+        }
+        .stat-value {
+          font-size: 1.5rem;
+          margin-bottom: 0;
+        }
+        .text-primary    { color: #2980b9 !important; }
+        .text-success    { color: #27ae60 !important; }
+        .text-danger     { color: #c0392b !important; }
+        .text-info       { color: #16a085 !important; }
+        .text-secondary  { color: #636e72 !important; }
+
+        /* ===== Modal simples ========================================= */
+        .modal{
+          display:none;
+          position:fixed;top:0;left:0;
+          width:100%;height:100%;
+          background:rgba(0,0,0,.5);
+          justify-content:center;align-items:center;
+          z-index:1055;
+        }
+        .modal-content{
+          background:#cbdfe0;padding:1.5rem;border-radius:12px;
+          width:90%;max-width:500px;position:relative;
+        }
+        .modal .close{
+          position:absolute;top:.5rem;right:.75rem;
+          font-size:1.5rem;cursor:pointer;
+        }
+
+        /* ===== Rodapé =============================================== */
+        footer{background:#2d3e50;color:#fff;padding:10px 10px;margin-top:auto;text-align:center;}
+
+        /* ===== Estilos específicos da página ======================= */
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--cw-primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-positive {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-negative {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-control:read-only {
+            background-color: #e9ecef;
+        }
+
+        .btn-edit {
+            background: var(--cw-primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-edit:hover {
+            background: #1a252f;
+            color: white;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Header -->
+  <header class="navbar navbar-expand-md navbar-dark px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../Home/Home.html">
+      <img src="../../img/LogoCashWiseTransparente2.png" alt="CashWise Logo" width="120" class="img-fluid" />
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+            aria-controls="menu" aria-expanded="false" aria-label="Alternar navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <nav id="menu" class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav gap-md-2 text-center">
+        <li class="nav-item"><a class="nav-link" href="../Home/Home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="../Conteudo/Conteudo.HTML">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="../Home/Home.html">Sair</a></li>
+       
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            <!-- Loading -->
+            <div id="loading" class="text-center py-5" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p class="mt-3 text-muted">Carregando informações do usuário...</p>
+            </div>
+
+            <!-- Erro -->
+            <div id="error" class="alert alert-danger" style="display: none;">
+                <h5>❌ Erro ao carregar dados</h5>
+                <p>Não foi possível carregar as informações do usuário.</p>
+                <button class="btn btn-primary" onclick="carregarDadosUsuario()">Tentar Novamente</button>
+            </div>
+
+            <!-- Perfil do Usuário -->
+            <div id="user-profile" style="display: none;">
+                <div class="row">
+                    <!-- Card Principal do Perfil -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="card profile-card shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="avatar mx-auto mb-3 d-flex align-items-center justify-content-center">
+                                    <span style="font-size: 2.5rem;">👤</span>
+                                </div>
+                                <h4 id="profile-name" class="mb-2">Nome do Usuário</h4>
+                                <p id="profile-email" class="text-muted mb-3">email@exemplo.com</p>
+                                <div id="profile-status" class="mb-3"></div>
+                                <button class="btn btn-edit w-100" onclick="toggleEdit()">
+                                    <span id="edit-btn-text">✏️ Editar Perfil</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulário de Edição -->
+                    <div class="col-lg-8">
+                        <div class="card profile-card shadow-sm">
+                            <div class="card-header">
+                                <h5 class="mb-0">📋 Informações Pessoais</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="profile-form">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nome" class="form-label">Nome Completo</label>
+                                            <input type="text" class="form-control" id="nome" readonly>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" readonly>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="id" class="form-label">ID do Usuário</label>
+                                            <input type="text" class="form-control" id="id" readonly>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Status Financeiro</label>
+                                            <div>
+                                                <select class="form-control" id="status-select" disabled>
+                                                    <option value="false">Em Dia</option>
+                                                    <option value="true">Endividado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="form-actions" style="display: none;">
+                                        <hr>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-success" onclick="salvarAlteracoes()">
+                                                💾 Salvar Alterações
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" onclick="cancelarEdicao()">
+                                                ❌ Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Estatísticas do Usuário -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="stat-card p-3">
+                                    <div class="stat-title text-primary">Total de Transações</div>
+                                    <div class="stat-value text-primary" id="total-transacoes">0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-card p-3">
+                                    <div class="stat-title text-info">Última Atividade</div>
+                                    <div class="stat-value text-info" id="ultima-atividade">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ações Rápidas -->
+                        <div class="card profile-card shadow-sm mt-4">
+                            <div class="card-header">
+                                <h5 class="mb-0"> Ações Financeiras </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-primary" onclick="verTransacoes()">
+                                        📊 Ver Transações
+                                    </button>
+                                    <button class="btn btn-success" onclick="adicionarTransacao()">
+                                        ➕ Nova Transação
+                                    </button>
+                                    <button class="btn btn-info" onclick="verRelatorios()">
+                                        📈 Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+   <footer class="text-white py-4 mt-auto">
+  <div class="container text-center text-md-start">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <h4 class="text-success">Links</h4>
+        <ul class="list-unstyled">
+          <li><a class="text-white text-decoration-none" href="../Home/Home.html">Início</a></li>
+          <li><a class="text-white text-decoration-none" href="#">Sobre</a></li>
+          <li><a class="text-white text-decoration-none" href="#">Blog</a></li>
+          <li><a class="text-white text-decoration-none" href="#">Contato</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h4 class="text-success">Contato</h4>
+        <p class="mb-1">E-mail: contato@cashwise.com</p>
+        <p>Telefone: (00) 1234-5678</p>
+      </div>
+      <div class="col-12 col-md-4 d-flex align-items-end">
+        <p class="small mb-0">2025 &copy; Cash Wise – TIADAI</p>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let usuarioAtual = null;
+        let modoEdicao = false;
+
+        // Função principal para carregar dados do usuário
+        function carregarDadosUsuario() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const profile = document.getElementById('user-profile');
+
+            // Mostrar loading
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            profile.style.display = 'none';
+
+            console.log('🔍 Iniciando busca pelos dados do usuário...');
+
+            // Método 1: Tentar pegar do sessionStorage
+            let usuarioLogado = sessionStorage.getItem('usuarioLogado');
+            console.log('📱 SessionStorage:', usuarioLogado);
+
+            // Método 2: Tentar pegar do localStorage
+            if (!usuarioLogado) {
+                usuarioLogado = localStorage.getItem('usuarioLogado');
+                console.log('💾 LocalStorage:', usuarioLogado);
+            }
+
+            // Método 3: Tentar pegar da URL
+            if (!usuarioLogado) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const userId = urlParams.get('userId');
+                console.log('🔗 UserId da URL:', userId);
+                
+                if (userId) {
+                    buscarUsuarioPorId(userId);
+                    return;
+                }
+            }
+
+            // Se encontrou dados armazenados
+            if (usuarioLogado) {
+                try {
+                    const usuario = JSON.parse(usuarioLogado);
+                    console.log('✅ Usuário encontrado no storage:', usuario);
+                    
+                    // Verificar se o usuário ainda existe na API
+                    verificarUsuarioNaAPI(usuario);
+                } catch (error) {
+                    console.error('❌ Erro ao fazer parse dos dados:', error);
+                    buscarPrimeiroUsuario(); // Fallback
+                }
+            } else {
+                console.log('⚠️ Nenhum usuário encontrado, buscando primeiro usuário da API...');
+                buscarPrimeiroUsuario(); // Para desenvolvimento
+            }
+        }
+
+        // Função para buscar usuário por ID na API
+        function buscarUsuarioPorId(userId) {
+            console.log(`🔍 Buscando usuário ID: ${userId}`);
+            
+            fetch(`http://localhost:5284/Usuario/${userId}`)
+                .then(response => {
+                    console.log('📡 Resposta da API:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`Usuário não encontrado (${response.status})`);
+                    }
+                    return response.json();
+                })
+                .then(usuario => {
+                    console.log('✅ Usuário encontrado pela API:', usuario);
+                    usuarioAtual = usuario;
+                    exibirDadosUsuario(usuario);
+                    // Salvar no sessionStorage para próximas visitas
+                    sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                })
+                .catch(error => {
+                    console.error('❌ Erro ao buscar usuário por ID:', error);
+                    buscarPrimeiroUsuario(); // Fallback
+                });
+        }
+
+        // Função para verificar se o usuário ainda existe na API
+        function verificarUsuarioNaAPI(usuario) {
+            fetch(`http://localhost:5284/Usuario/${usuario.idUsuario}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Usuário não encontrado na API');
+                    }
+                })
+                .then(usuarioAtualizado => {
+                    console.log('✅ Usuário verificado na API:', usuarioAtualizado);
+                    usuarioAtual = usuarioAtualizado;
+                    exibirDadosUsuario(usuarioAtualizado);
+                    // Atualizar dados armazenados
+                    sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioAtualizado));
+                })
+                .catch(error => {
+                    console.log('⚠️ Usuário não encontrado na API, usando dados locais:', error);
+                    usuarioAtual = usuario;
+                    exibirDadosUsuario(usuario);
+                });
+        }
+
+        // Função para buscar primeiro usuário (para desenvolvimento)
+        function buscarPrimeiroUsuario() {
+            console.log('🔍 Buscando primeiro usuário da API...');
+            
+            fetch('http://localhost:5284/Usuario')
+                .then(response => {
+                    console.log('📡 Resposta da API (todos usuários):', response.status);
+                    if (!response.ok) {
+                        throw new Error(`Erro na API: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(usuarios => {
+                    console.log('📋 Usuários encontrados:', usuarios);
+                    
+                    if (usuarios && usuarios.length > 0) {
+                        const primeiroUsuario = usuarios[0];
+                        console.log('✅ Usando primeiro usuário:', primeiroUsuario);
+                        usuarioAtual = primeiroUsuario;
+                        exibirDadosUsuario(primeiroUsuario);
+                        // Salvar no sessionStorage
+                        sessionStorage.setItem('usuarioLogado', JSON.stringify(primeiroUsuario));
+                    } else {
+                        throw new Error('Nenhum usuário encontrado na API');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ Erro ao buscar usuários:', error);
+                    mostrarErro('Erro ao conectar com a API. Verifique se ela está rodando em http://localhost:5284');
+                });
+        }
+
+        // Função para exibir os dados do usuário
+       // Atualiza os dados visuais e backend do usuário
+function exibirDadosUsuario(usuario) {
+  console.log('🎨 Exibindo dados do usuário:', usuario);
+
+  document.getElementById('profile-name').textContent = usuario.nomeUsuario || 'Nome não informado';
+  document.getElementById('profile-email').textContent = usuario.emailUsuario || 'Email não informado';
+  document.getElementById('nome').value = usuario.nomeUsuario || '';
+  document.getElementById('email').value = usuario.emailUsuario || '';
+  document.getElementById('id').value = usuario.idUsuario || '';
+
+  const statusElement = document.getElementById('profile-status');
+  const statusSelect = document.getElementById('status-select');
+
+  if (usuario.endividado) {
+    statusElement.innerHTML = '<span class="status-badge status-negative">Endividado</span>';
+    statusSelect.value = 'true';
+  } else {
+    statusElement.innerHTML = '<span class="status-badge status-positive">Em Dia</span>';
+    statusSelect.value = 'false';
+  }
+
+  buscarEstatisticas(usuario.idUsuario);
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('user-profile').style.display = 'block';
+}
+
+function buscarEstatisticas(userId) {
+  fetch('http://localhost:5284/Transacao')
+    .then(response => response.json())
+    .then(transacoes => {
+      const transacoesUsuario = transacoes.filter(t => t.usuarioFK === userId);
+      document.getElementById('total-transacoes').textContent = transacoesUsuario.length;
+
+      if (transacoesUsuario.length > 0) {
+        const maisRecente = transacoesUsuario.reduce((a, b) =>
+          new Date(a.dataTrans) > new Date(b.dataTrans) ? a : b);
+
+        const dataFormatada = new Date(maisRecente.dataTrans).toLocaleDateString('pt-BR');
+        document.getElementById('ultima-atividade').textContent = dataFormatada;
+      }
+    })
+    .catch(error => {
+      console.error('Erro ao buscar estatísticas:', error);
+    });
+}
+
+function mostrarErro(mensagem = 'Erro ao carregar dados do usuário') {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('error').style.display = 'block';
+  document.getElementById('error').querySelector('p').textContent = mensagem;
+}
+
+function toggleEdit() {
+  modoEdicao = !modoEdicao;
+  const inputs = ['nome', 'email'];
+  const statusSelect = document.getElementById('status-select');
+  const editBtn = document.getElementById('edit-btn-text');
+  const formActions = document.getElementById('form-actions');
+
+  if (modoEdicao) {
+    inputs.forEach(id => {
+      const input = document.getElementById(id);
+      input.removeAttribute('readonly');
+    });
+    statusSelect.disabled = false;
+    editBtn.innerHTML = '⏸️ Cancelar Edição';
+    formActions.style.display = 'block';
+  } else {
+    cancelarEdicao();
+  }
+}
+
+function cancelarEdicao() {
+  modoEdicao = false;
+  const inputs = ['nome', 'email'];
+  const statusSelect = document.getElementById('status-select');
+  const editBtn = document.getElementById('edit-btn-text');
+  const formActions = document.getElementById('form-actions');
+
+  inputs.forEach(id => {
+    document.getElementById(id).setAttribute('readonly', true);
+  });
+  statusSelect.disabled = true;
+  editBtn.innerHTML = '✏️ Editar Perfil';
+  formActions.style.display = 'none';
+
+  if (usuarioAtual) {
+    exibirDadosUsuario(usuarioAtual);
+  }
+}
+
+function salvarAlteracoes() {
+  if (!usuarioAtual) {
+    alert('Erro: Dados do usuário não encontrados');
+    return;
+  }
+
+  const dadosAtualizados = {
+    idUsuario: usuarioAtual.idUsuario,
+    nomeUsuario: document.getElementById('nome').value,
+    emailUsuario: document.getElementById('email').value,
+    senhaUsuario: usuarioAtual.senhaUsuario,
+    endividado: document.getElementById('status-select').value === 'true'
+  };
+
+  fetch(`http://localhost:5284/Usuario/${usuarioAtual.idUsuario}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dadosAtualizados)
+  })
+    .then(response => {
+      if (response.ok) {
+        alert('✅ Perfil atualizado com sucesso!');
+        usuarioAtual = dadosAtualizados;
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioAtual));
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioAtual));
+        localStorage.setItem('usuarioLogadoId', usuarioAtual.idUsuario);
+        cancelarEdicao();
+        exibirDadosUsuario(usuarioAtual);
+      } else {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+    })
+    .catch(error => {
+      console.error('❌ Erro ao salvar:', error);
+      alert('❌ Erro ao salvar alterações. Tente novamente.');
+    });
+}
+
+function verTransacoes() {
+  if (usuarioAtual) {
+    window.location.href = `../Perfil-Ver-Tran/VerTransa.html`;
+  }
+}
+
+function adicionarTransacao() {
+  if (usuarioAtual) {
+    window.location.href = `../Perfil-Ver-Tran/Transacoes.html`;
+  }
+}
+
+function verRelatorios() {
+  if (usuarioAtual) {
+    window.location.href = `../Página do Usuario/Usuario.html`;
+  }
+}
+
+function logout() {
+  if (confirm('Tem certeza que deseja sair?')) {
+    sessionStorage.removeItem('usuarioLogado');
+    localStorage.removeItem('usuarioLogado');
+    localStorage.removeItem('usuarioLogadoId');
+    window.location.href = '../Login/login.html';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', carregarDadosUsuario);
+
+    </script>
+</body>
+</html>

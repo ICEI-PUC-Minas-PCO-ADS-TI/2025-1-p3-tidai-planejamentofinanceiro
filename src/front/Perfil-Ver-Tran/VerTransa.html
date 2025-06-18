@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil do Usuário – Cash Wise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="perfilU.css" />
+  <script src="VerTransacao.js" defer></script>
+ 
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<header class="navbar navbar-expand-md navbar-dark px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../Home/Home.html">
+      <img src="../../img/LogoCashWiseTransparente2.png" alt="CashWise Logo" width="120" class="img-fluid" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+            aria-controls="menu" aria-expanded="false" aria-label="Alternar navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <nav id="menu" class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav gap-md-2 text-center">
+        <li class="nav-item"><a class="nav-link" href="../Home/Home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="../Perfil Usuario/PerfilU.html">Perfil</a></li>
+        <li class="nav-item"><a class="nav-link" href="../Conteudo/Conteudo.HTML">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="../Home/Home.html">Sair</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container my-4 flex-grow-1">
+  <div class="row gy-4 align-items-start">
+    <div class="col-12 col-md-4 col-lg-3">
+      <article class="profile-card text-center shadow-sm p-4 bg-light h-100">
+        <div class="position-relative d-inline-block mb-3">
+          <img src="../../img/userPlaceholder.png" alt="Foto do Administrador" class="rounded-circle" width="100" height="100" id="admin-avatar">
+          <input type="file" id="avatarInput" accept="image/*" style="display:none">
+          </div>
+        <h2 id="user-name" class="h5 mb-1">Thiago Marques</h2>
+        <p id="user-age" class="mb-0">30 anos</p>
+        <p id="user-period" class="text-muted small">4º período</p>
+        </article>
+    </div>
+
+    <!-- Estatísticas organizadas em cards -->
+    <div class="col-12 col-md-8 col-lg-9">
+      <div class="row g-3 mb-2">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="stat-card shadow-sm text-center p-3">
+            <div class="stat-title text-primary">Salario Atual</div>
+            <div class="stat-value text-success fw-bold" id="total-ganhos">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="stat-card shadow-sm text-center p-3">
+            <div class="stat-title text-primary"> Gastos no Mês</div>
+            <div class="stat-value text-danger fw-bold" id="total-gastos">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="stat-card shadow-sm text-center p-3">
+            <div class="stat-title text-primary">Quanto Quer Investir</div>
+            <div class="stat-value text-info fw-bold" id="total-investido">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="stat-card shadow-sm text-center p-3">
+            <div class="stat-title text-primary">Lazer</div>
+            <div class="stat-value text-secondary fw-bold" id="lazer-disponivel">R$ 0,00</div>
+          </div>
+        </div>
+      </div>
+     <section class="mb-5">
+  <h2 class="mb-3">Últimas Transações</h2>
+
+
+  <div class="table-responsive-sm">
+    <table class="table align-middle table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Data</th>
+          <th class="d-none d-md-table-cell">Descrição</th>
+          <th>Valor</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>20/03/2025</td>
+          <td class="d-none d-md-table-cell">Salário</td>
+          <td class="text-success fw-bold">+R$ 5 000,00</td>
+          <td class="d-none d-sm-table-cell">Receita</td>
+        </tr>
+      
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal de edição (fica escondido até clicar em editar) -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="h5 mb-3">Editar Perfil</h2>
+    <div class="mb-3">
+      <label class="form-label">Nome atual: <span id="labelName"></span></label>
+      <input type="text" id="editName" class="form-control mb-2" placeholder="Nome">
+
+      <label class="form-label">Idade atual: <span id="labelAge"></span></label>
+      <input type="number" id="editAge" class="form-control mb-2" placeholder="Idade">
+
+      <label class="form-label">Período atual: <span id="labelPeriod"></span></label>
+      <input type="text" id="editPeriod" class="form-control mb-2" placeholder="Período">
+
+      <hr>
+
+      <label class="form-label">Salario Atual: <span id="labelGanhos"></span></label>
+      <input type="text" id="editGanhos" class="form-control mb-2" placeholder="Total de Ganhos">
+
+      <label class="form-label">Gasto no Mês: <span id="labelGastos"></span></label>
+      <input type="text" id="editGastos" class="form-control mb-2" placeholder="Total de Gastos">
+
+      <label class="form-label">Quanto Quer Investir: <span id="labelInvestido"></span></label>
+      <input type="text" id="editInvestido" class="form-control mb-2" placeholder="Total Investido">
+
+      <label class="form-label">Lazer: <span id="labelLazer"></span></label>
+      <input type="text" id="editLazer" class="form-control mb-2" placeholder="Lazer Disponível">
+    </div>
+    <button id="saveProfile" class="btn btn-success w-100">Salvar</button>
+  </div>
+</div>
+
+<footer class="text-white py-4 mt-auto">
+  <div class="container text-center text-md-start">
+    <div class="row gy-4">
+      <div class="col-12 col-md-4">
+        <h4 class="text-success">Links</h4>
+        <ul class="list-unstyled">
+          <li><a class="text-white text-decoration-none" href="../Home/Home.html">Home</a></li>
+          <li><a class="text-white text-decoration-none" href="#">Blog</a></li>
+          <li><a class="text-white text-decoration-none" href="#">Contato</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h4 class="text-success">Contato</h4>
+        <p class="mb-1">E-mail: contato@cashwise.com</p>
+        <p>Telefone: (00) 1234-5678</p>
+      </div>
+      <div class="col-12 col-md-4 d-flex align-items-end">
+        <p class="small mb-0">2025 &copy; Cash Wise – TIADAI</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -29,11 +29,33 @@ header{
 }
 
 /* ===== Estatísticas ========================================== */
-.stat-box{
-  background:#cbdfe0;border-radius:12px;
-  font-size:clamp(.85rem,2.5vw,1rem);
+/* ...existing code... */
+.stat-card {
+  background: #e9f2fa;
+  border-radius: 14px;
+  min-height: 120px;
+  transition: box-shadow 0.2s;
+  border: 1.5px solid #b3d1e6;
+  margin-bottom: 10px;
 }
-
+.stat-card:hover {
+  box-shadow: 0 4px 24px rgba(44, 130, 201, 0.10);
+}
+.stat-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+.stat-value {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+.text-primary    { color: #2980b9 !important; }
+.text-success    { color: #27ae60 !important; }
+.text-danger     { color: #c0392b !important; }
+.text-info       { color: #16a085 !important; }
+.text-secondary  { color: #636e72 !important; }
 /* ===== Modal simples ========================================= */
 .modal{
   display:none;                    /* oculto por padrão */
