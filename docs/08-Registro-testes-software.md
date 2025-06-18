@@ -1,88 +1,162 @@
-### **Registro de Execução de Testes de Software – Projeto Cash Wise**
 
-Este documento detalha os resultados da execução dos testes definidos no Plano de Testes do projeto Cash Wise, com base nos cenários funcionais e não funcionais.
+# ✅ **Registro de Execução de Testes de Software – Projeto Cash Wise**
 
-**Informações Gerais do Ciclo de Teste:**
+Este documento detalha os resultados da execução dos testes definidos no Plano de Testes do projeto **Cash Wise**, com base nos cenários funcionais e não funcionais.
 
-  * **Projeto:** Cash Wise
-  * **Data de Execução:** 15/06/2025
-  * **Responsável pela Execução:** Gabriel Henrique Medice Marçal
+---
 
------
+## 📌 **Informações Gerais do Ciclo de Teste**
 
-### **1. Resumo dos Resultados**
+- **Projeto:** Cash Wise  
+- **Data de Execução:** 15/06/2025  
+- **Responsável pela Execução:** Gabriel Henrique Medice Marçal  
 
-Descrição e Resumo dos Resultados [Escrever após os testes]
+---
 
-  * **Total de Casos de Teste Executados:** ???
-  * **Aprovados:** ???
-  * **Reprovados:** ???
-  * **Status Geral do Ciclo:** **Reprovado/Aprovado** (Motivações)
+## 📊 **1. Resumo dos Resultados**
 
------
+- **Total de Casos de Teste Executados:** 15  
+- **Aprovados:** 13  
+- **Reprovados:** 2  
+- **Status Geral do Ciclo:** ✅ **Aprovado com Restrições**  
+  > *Alguns ajustes visuais e de navegação foram recomendados pelos usuários.*
 
-### **2. Resultados Detalhados dos Testes Funcionais**
+---
 
-#### **2.1. Cadastro e Autenticação de Usuário**
+## 🔍 **2. Resultados Detalhados dos Testes Funcionais**
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT01** | Cadastro de novo usuário | Usuário cadastrado com sucesso | Resultado Obtido | **Aprovado/Reprovado** | - |
-| **CT02** | Login com credenciais corretas | Redirecionamento para tela principal | Resultado Obtido | **Aprovado/Reprovado** | - |
-| **CT03** | Login com senha incorreta | Exibição de mensagem de erro | Resultado Obtido | **Aprovado/Reprovado** | - |
-| **CT04** | E-mail inválido no cadastro | Exibição de erro de validação | Resultado Obtido | **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02)                            |
+### 2.1 Cadastro e Autenticação de Usuário
 
-#### **2.2. Lançamentos Financeiros**
+| ID do Teste | Descrição                     | Resultado Esperado                           | Resultado Obtido | Status         | Observações |
+|-------------|-------------------------------|----------------------------------------------|------------------|----------------|-------------|
+| CT01        | Cadastro de novo usuário      | Usuário cadastrado com sucesso               | Obtido com sucesso | ✅ Aprovado  | -           |
+| CT02        | Login com credenciais válidas | Redirecionamento para o dashboard            | Obtido com sucesso | ✅ Aprovado  | -           |
+| CT03        | Login com senha incorreta     | Exibição de mensagem de erro                 | Obtido com sucesso | ✅ Aprovado  | -           |
+| CT04        | E-mail inválido no cadastro   | Exibição de erro de validação                | Obtido com sucesso | ✅ Aprovado  | -           |
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT05** | Cadastro de lançamento | Lançamento adicionado à lista | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| **CT06** | Listagem de lançamentos | Exibição dos lançamentos cadastrados | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| **CT07** | Validação de valor negativo | Exibição de erro de validação | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+📁 **Evidências**: [Drive - CT02](http://www.teste.com.br/drive/ct-02)
 
-#### **2.3. Acompanhamento Financeiro**
+---
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **CT08** | Visualização de saldo geral | Saldo exibido corretamente | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| **CT09** | Exibição de gráficos de despesas | Gráfico gerado com dados consistentes | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+### 2.2 Lançamentos Financeiros
 
-### **3. Resultados Detalhados dos Testes Não Funcionais**
+| ID do Teste | Descrição                    | Resultado Esperado                 | Resultado Obtido   | Status         | Observações |
+|-------------|------------------------------|------------------------------------|--------------------|----------------|-------------|
+| CT05        | Cadastro de lançamento       | Lançamento adicionado à lista      | Obtido com sucesso | ✅ Aprovado  | -           |
+| CT06        | Listagem de lançamentos      | Exibição dos lançamentos salvos   | Obtido com sucesso | ✅ Aprovado  | -           |
+| CT07        | Valor negativo               | Exibição de erro de validação     | Problema encontrado | ❌ Reprovado | Valor aceito indevidamente |
 
-#### **3.1. Usabilidade**
+📁 **Evidências**: [Drive - CT07](http://www.teste.com.br/drive/ct-02)
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF01** | Interface intuitiva | Usuário consegue utilizar sem ajuda | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| **NF02** | Feedback visual adequado | Exibição de mensagens e indicadores | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+---
 
-#### **3.2. Desempenho**
+### 2.3 Acompanhamento Financeiro
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF03** | Tempo de carregamento | Carregamento em menos de 3 segundos | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+| ID do Teste | Descrição                  | Resultado Esperado                      | Resultado Obtido   | Status         | Observações               |
+|-------------|----------------------------|-----------------------------------------|--------------------|----------------|---------------------------|
+| CT08        | Visualização do saldo      | Saldo exibido corretamente              | Obtido com sucesso | ✅ Aprovado  | -                         |
+| CT09        | Gráficos de despesas       | Gráficos com dados consistentes         | Falhas visuais     | ❌ Reprovado | Inconsistência visual     |
 
-#### **3.3. Segurança**
+📁 **Evidências**: [Drive - CT09](http://www.teste.com.br/drive/ct-02)
 
-| ID do Teste | Descrição | Resultado Esperado | Resultado Obtido | Status | Observações |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **NF04** | Armazenamento seguro de senhas | Senhas criptografadas no banco | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| **NF05** | Bloqueio de acesso com login incorreto | Bloqueio temporário da conta | Resultado Obtido |  **Aprovado/Reprovado** | - |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+---
 
-### **4. Incidentes Registrados**
+## 🧪 **3. Resultados dos Testes Não Funcionais**
 
-| ID do Defeito | Caso de Teste Associado | Descrição do Problema | Prioridade | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **CW-101** | CT07 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
-| **CW-102** | CT09 | Descrição do Problema | **Prioridade** | Aberto/Fechado |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+### 3.1 Usabilidade
 
+| ID do Teste | Descrição                | Resultado Esperado                  | Resultado Obtido    | Status        | Observações                                 |
+|-------------|--------------------------|-------------------------------------|---------------------|---------------|----------------------------------------------|
+| NF01        | Interface intuitiva      | Usuário consegue usar sem auxílio   | Constatado          | ✅ Aprovado | Usuários elogiaram clareza da navegação     |
+| NF02        | Feedback visual          | Indicadores e mensagens claros      | Adequado            | ✅ Aprovado | Sugeridas melhorias pós-login automático     |
 
+📁 **Evidências**: [Usabilidade](http://www.teste.com.br/drive/ct-02)
 
-### **5. Conclusão e Recomendações**
+---
+
+### 3.2 Desempenho
+
+| ID do Teste | Descrição             | Resultado Esperado             | Resultado Obtido | Status         | Observações |
+|-------------|-----------------------|--------------------------------|------------------|----------------|-------------|
+| NF03        | Tempo de carregamento | < 3 segundos                   | 2.3s             | ✅ Aprovado  | -           |
+
+---
+
+### 3.3 Segurança
+
+| ID do Teste | Descrição                     | Resultado Esperado                        | Resultado Obtido | Status         | Observações |
+|-------------|-------------------------------|-------------------------------------------|------------------|----------------|-------------|
+| NF04        | Senhas seguras                | Criptografia no banco                     | Confirmado       | ✅ Aprovado  | -           |
+| NF05        | Tentativas inválidas de login | Bloqueio após 3 falhas                    | Confirmado       | ✅ Aprovado  | -           |
+
+---
+
+## 🐞 **4. Incidentes Registrados**
+
+| ID do Defeito | Caso de Teste | Descrição do Problema                   | Prioridade | Status  |
+|---------------|----------------|------------------------------------------|------------|---------|
+| CW-101        | CT07           | Valor negativo foi aceito no cadastro    | Alta       | Aberto  |
+| CW-102        | CT09           | Gráfico exibido sem dados organizados    | Média      | Aberto  |
+
+---
+
+## ✅ **5. Conclusão e Recomendações**
+
+O ciclo de testes foi bem-sucedido, com a maioria das funcionalidades operando conforme esperado. Dois pontos de atenção foram destacados:
+
+- Validação de valores negativos precisa ser corrigida.
+- O dashboard requer ajustes visuais para padronização.
+
+**Recomendações:**
+- Corrigir os bugs dos testes CT07 e CT09.
+- Refatorar o layout do gráfico do dashboard.
+- Reavaliar a navegação redundante dos botões “Home” e “Sair”.
+
+---
+
+# 🧾 **6. Testes Individuais – Avaliação de Usuários**
+
+### 👤 Wagner Ribeiro
+
+#### Funcionalidades Testadas:
+- Cadastro de Perfil (CT-001): Sucesso no cadastro, campos salvos corretamente, opção de edição funcional.
+- Login (CT-002): Acesso com sucesso, redirecionamento para dashboard, dados exibidos corretamente.
+- Lançamentos (CT-003): Corrigido bug de duplicação, valores atualizam corretamente no modal.
+- Perfil Financeiro (CT-004): Feedback como “Você precisa melhorar sua vida financeira”.
+- Dashboard (CT-005): Dados exibidos, gráficos organizados, áreas visuais ainda com necessidade de ajustes.
+
+#### Avaliação:
+- **Pontos Fortes:** Melhoria no formulário, estrutura do blog no topo, correções visuais eficazes.
+- **Pontos a Melhorar:** Dados zerados em telas específicas, conteúdo do blog no rodapé, redundância de botões (“Home” e “Sair”).
+
+---
+
+### 👩 Clara Eckel
+
+#### Funcionalidades Testadas:
+- Cadastro de Perfil (CT-001): Cadastro funcional e edição operante.
+- Login (CT-002): Login bem-sucedido com dados exibidos.
+- Lançamentos (CT-003): Registro correto, sem sobreposição.
+- Perfil Financeiro (CT-004): Feedback positivo conforme dados (“Você está no caminho certo”).
+- Dashboard (CT-005): Exibição de gráficos em barra/pizza com dados consistentes.
+
+#### Avaliação:
+- **Pontos Fortes:** Simplicidade e fluidez no uso.
+- **Pontos a Melhorar:** Mais campos no perfil (profissão, metas), conteúdo no rodapé do site, sugestões no feedback.
+
+---
+
+### 👨‍💻 Pablo Marques
+
+#### Funcionalidades Testadas:
+- Cadastro de Perfil (CT-001): Dados corretos e edição funcional.
+- Login (CT-002): Dashboard acessado com sucesso.
+- Lançamentos (CT-003): Atualização consistente dos valores.
+- Perfil Financeiro (CT-004): Feedback crítico (“Você precisa melhorar sua vida financeira”).
+- Dashboard (CT-005): Gráficos funcionais e dados completos.
+
+#### Avaliação:
+- **Pontos Fortes:** Cadastro funcional, alertas claros, gráficos bem estruturados.
+- **Pontos a Melhorar:** Personalização do perfil (foto), conteúdo do rodapé, reposicionamento de botões de navegação.
+
+---
