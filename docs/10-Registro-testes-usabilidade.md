@@ -4,7 +4,6 @@
 
 Após realizar os testes de usabilidade, obtém-se um relatório a partir das análises realizadas. O registro de testes de usabilidade é um relatório que contém as evidências dos testes e os relatos dos usuários participantes, baseado no <a href="09-Plano-testes-usabilidade.md">Plano de testes de usabilidade</a> desenvolvido para os casos de uso desta etapa.
 
-Evidência: https://drive.google.com/file/d/1_MGMzM49rwEfJQIUAyztjqojj3GVi-dT/view?usp=sharing
 ---
 
 ### Cenário 1: Você é um novo usuário interessado em começar a organizar suas finanças. Acesse o CashWise, realize o cadastro e explore a interface principal.
@@ -72,3 +71,5 @@ Os comentários dos participantes também revelaram oportunidades de melhorias, 
 
 > **Google Form usado para obter feedback dos voluntários**:
 > - [System Usability Score do CashWise](https://docs.google.com/forms/d/e/1FAIpQLSeMqzmz7YzTmY0-jR_DtRrLPZePh-UyExxzg4FqMHcXxZnHew/viewform?usp=sharing&ouid=104028838292445835160)
+
+Evidência: https://drive.google.com/file/d/1_MGMzM49rwEfJQIUAyztjqojj3GVi-dT/view?usp=sharing
