@@ -69,7 +69,7 @@ Quanto ao tempo de conclusão das tarefas, foi observada uma diferença consider
 
 Os comentários dos participantes também revelaram oportunidades de melhorias, como destacar melhor elementos importantes, adicionar notificações e incluir pequenos tutoriais para novos usuários. Essas sugestões podem contribuir para uma usabilidade ainda melhor nas próximas versões da aplicação.
 
-> **Google Form usado para obter feedback dos voluntários**:
-> - [System Usability Score do CashWise](https://docs.google.com/forms/d/e/1FAIpQLSeMqzmz7YzTmY0-jR_DtRrLPZePh-UyExxzg4FqMHcXxZnHew/viewform?usp=sharing&ouid=104028838292445835160)
+> **Resultado do questinário de usabilidade**:
+> - [Resultado](https://docs.google.com/document/d/1AQ2N1kJTJhpivuA5flLjpJxeSHhIlo65HBB_wFXCN38/edit?usp=sharing)
 
 Evidência: https://drive.google.com/file/d/1_MGMzM49rwEfJQIUAyztjqojj3GVi-dT/view?usp=sharing
