@@ -11,8 +11,12 @@ a{text-decoration:none;}
 .navbar {
   background: #2d3e50;
 }
-.nav-link{color:#2d3e50!important;}
-.nav-link:hover{opacity:.8;}
+.nav-link {
+  color: white !important;
+}
+.nav-link {
+  color: white !important;
+}
 .footer,
 footer {
   background: #2d3e50 !important;

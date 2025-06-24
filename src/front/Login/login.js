@@ -18,19 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Se o email contiver "admin", redireciona para a página do administrador
     if (email.includes("admin")) {
-      console.log("Email com 'admin' detectado, redirecionando para AlterarA.html");
       window.location.href = "../Alterar Administrador/AlterarA.html";
       return;
     }
 
-    // Caso contrário, segue com login normal
     fetch('http://localhost:5284/Usuario')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+        return response.json();
+      })
       .then(usuarios => {
+        if (!Array.isArray(usuarios)) throw new Error('Resposta da API não é um array válido');
+
         const usuario = usuarios.find(u =>
-          u.emailUsuario.toLowerCase() === email && u.senhaUsuario === senha
+          u.emailUsuario?.toLowerCase() === email && u.senhaUsuario === senha
         );
 
         if (!usuario) {
@@ -38,15 +40,27 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        // Salva o email e o ID do usuário logado no localStorage para uso posterior
-        localStorage.setItem('usuarioLogadoEmail', usuario.emailUsuario);
-        localStorage.setItem('usuarioLogadoId', usuario.idUsuario);
+        const dadosUsuario = {
+          idUsuario: usuario.idUsuario,
+          nomeUsuario: usuario.nomeUsuario,
+          emailUsuario: usuario.emailUsuario,
+          senhaUsuario: usuario.senhaUsuario,
+          endividado: usuario.endividado
+        };
 
-        window.location.href = "../Página do Usuario/Usuario.html";
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(dadosUsuario));
+        localStorage.setItem('usuarioLogado', JSON.stringify(dadosUsuario));
+
+        window.location.href = "../Perfil Usuario/PerfilU.html";
       })
       .catch(error => {
-        console.error('Erro ao buscar usuários:', error);
-        alert('Erro ao tentar logar.');
+        console.error('Erro ao logar:', error);
+        alert(`Erro: ${error.message}`);
       });
   });
+});
+
+document.getElementById('btn-sair').addEventListener('click', function() {
+  localStorage.clear();
+  window.location.href = 'CAMINHO_PARA_LOGIN_OU_HOME.html';
 });

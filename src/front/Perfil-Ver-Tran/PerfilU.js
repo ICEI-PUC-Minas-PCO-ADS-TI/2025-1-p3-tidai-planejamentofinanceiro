@@ -198,3 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
     await carregarPerfil();
   })();
 });
+
+document.getElementById('btn-sair').addEventListener('click', function() {
+  localStorage.clear();
+  window.location.href = 'CAMINHO_PARA_LOGIN_OU_HOME.html';
+});
