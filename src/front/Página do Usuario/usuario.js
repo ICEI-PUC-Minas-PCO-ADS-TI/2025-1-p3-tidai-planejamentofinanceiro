@@ -31,8 +31,3 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Erro ao carregar transações:", err);
   });
 });
-
-document.getElementById('btn-sair').addEventListener('click', function() {
-  localStorage.clear();
-  window.location.href = 'CAMINHO_PARA_LOGIN_OU_HOME.html';
-});

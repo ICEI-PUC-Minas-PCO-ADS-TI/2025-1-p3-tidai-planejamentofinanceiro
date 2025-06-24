@@ -1,11 +1,20 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "JJuY+10sSByNWgxw9xL1teOPt3Z0560pUEa4fv7yqNI=",
+=======
+  "Hash": "iLZv7T8SqCvtqqVGmDSuy2R7mWSu9lzKpiJWR9e61uQ=",
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
   "Source": "CashWiseAPI",
   "BasePath": "_content/CashWiseAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
+<<<<<<< HEAD
   "Assets": []
+=======
+  "Assets": [],
+  "Endpoints": []
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
 }

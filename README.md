@@ -40,8 +40,9 @@ A presente documentação descreve a especificação de um projeto de aplicaçã
 
 # Código
 
-* <a href="src/README.md">Código</a>
+* <a href="src/back/">Código backend</a>
+* <a href="src/front/">Código frontend</a>
 
 # Apresentação
 
-* <a href="presentation/README.md">Apresentação do projeto</a>
+* <a href="presentation/cashWise_videoFinalEditado.mp4">Apresentação final do projeto</a>

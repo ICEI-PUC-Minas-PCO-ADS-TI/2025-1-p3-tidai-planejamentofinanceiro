@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CashWiseAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6de294c56493d862d12ab1512860deb39c2d61dc")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4961c571464dc3498e04cd74b7fbc6edadba07d4")]
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
 [assembly: System.Reflection.AssemblyProductAttribute("CashWiseAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CashWiseAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

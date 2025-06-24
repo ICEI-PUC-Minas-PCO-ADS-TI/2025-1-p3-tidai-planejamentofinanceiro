@@ -1,42 +1,107 @@
-# Plano de testes de software
+# Plano de Testes – Projeto Cash Wise
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>, <a href="04-Projeto-interface.md"> Projeto de interface</a>
+## 1. Introdução
 
-O plano de testes de software é gerado a partir da especificação do sistema e consiste em casos de teste que deverão ser executados quando a implementação estiver parcial ou totalmente pronta. Apresente os cenários de teste utilizados na realização dos testes da sua aplicação. Escolha cenários de teste que demonstrem os requisitos sendo satisfeitos.
+Este documento descreve o plano de testes do sistema **Cash Wise**, que tem como objetivo auxiliar os usuários na gestão de suas finanças pessoais. O plano contempla testes baseados nos requisitos funcionais e não funcionais levantados durante o desenvolvimento, bem como nas histórias de usuário fornecidas.
 
-Enumere quais cenários de testes foram selecionados para teste. Neste tópico, o grupo deve detalhar quais funcionalidades foram avaliadas, o grupo de usuários que foi escolhido para participar do teste e as ferramentas utilizadas.
+---
 
-Não deixe de enumerar os casos de teste de forma sequencial e garantir que o(s) requisito(s) associado(s) a cada um deles esteja(m) correto(s) — de acordo com o que foi definido na <a href="02-Especificacao.md">Especificação do projeto</a>.
+## 2. Objetivos dos Testes
 
-Por exemplo:
+- Verificar se o sistema cumpre os requisitos funcionais definidos.
+- Avaliar a estabilidade e desempenho da aplicação.
+- Garantir uma boa experiência de usuário e usabilidade.
+- Validar a segurança e proteção de dados do usuário.
 
-| **Caso de teste**  | **CT-001 – Cadastrar perfil**  |
-|:---: |:---: |
-| Requisito associado | RF-00X - A aplicação deve apresentar, na página principal, a funcionalidade de cadastro de usuários para que estes consigam criar e gerenciar seu perfil. |
-| Objetivo do teste | Verificar se o usuário consegue se cadastrar na aplicação. |
-| Passos | - Acessar o navegador <br> - Informar o endereço do site https://adota-pet.herokuapp.com/src/index.html <br> - Clicar em "Criar conta" <br> - Preencher os campos obrigatórios (e-mail, nome, sobrenome, celular, CPF, senha, confirmação de senha) <br> - Aceitar os termos de uso <br> - Clicar em "Registrar" |
-| Critério de êxito | - O cadastro foi realizado com sucesso. |
-| Responsável pela elaboração do caso de teste | Nome do integrante da equipe. |
+---
 
-<br>
+## 3. Escopo do Teste
 
-| **Caso de teste**  | **CT-002 – Efetuar login**  |
-|:---: |:---: |
-| Requisito associado | RF-00Y - A aplicação deve possuir opção de fazer login, sendo o login o endereço de e-mail. |
-| Objetivo do teste | Verificar se o usuário consegue realizar login. |
-| Passos | - Acessar o navegador <br> - Informar o endereço do site https://adota-pet.herokuapp.com/src/index.html <br> - Clicar no botão "Entrar" <br> - Preencher o campo de e-mail <br> - Preencher o campo de senha <br> - Clicar em "Login" |
-| Critério de êxito | - O login foi realizado com sucesso. |
-| Responsável pela elaboração do caso de teste | Nome do integrante da equipe. |
+Serão testadas as funcionalidades básicas da aplicação relacionadas a:
 
+- Autenticação de usuários
+- Cadastro e listagem de lançamentos
+- Acompanhamento financeiro
+- Segurança e persistência de dados
 
-## Ferramentas de testes (opcional)
+---
 
-Comente sobre as ferramentas de testes utilizadas.
- 
-> **Links úteis**:
-> - [IBM - criação e geração de planos de teste](https://www.ibm.com/developerworks/br/local/rational/criacao_geracao_planos_testes_software/index.html)
-> - [Práticas e técnicas de testes ágeis](http://assiste.serpro.gov.br/serproagil/Apresenta/slides.pdf)
-> - [Teste de software: conceitos e tipos de testes](https://blog.onedaytesting.com.br/teste-de-software/)
-> - [Criação e geração de planos de teste de software](https://www.ibm.com/developerworks/br/local/rational/criacao_geracao_planos_testes_software/index.html)
-> - [Ferramentas de teste para JavaScript](https://geekflare.com/javascript-unit-testing/)
-> - [UX Tools](https://uxdesign.cc/ux-user-research-and-user-testing-tools-2d339d379dc7)
+## 4. Abordagem dos Testes
+
+### 4.1 Testes Manuais
+Serão utilizados para verificar a usabilidade, comportamento da interface e validação de dados visuais.
+
+---
+## 5. Critérios de Aceitação
+
+- Todos os testes críticos devem ser aprovados.
+- Nenhum erro de alta prioridade pode permanecer sem correção.
+- O sistema deve se comportar conforme esperado em 100% dos casos de teste funcional.
+
+---
+
+## 6. Casos de Teste
+
+### 6.1 Cadastro e Autenticação de Usuário
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     | Tipo     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|----------|
+| CT01| Cadastro de novo usuário                 | Nome, e-mail, senha válida           | Usuário cadastrado com sucesso         | Funcional|
+| CT02| Login com credenciais corretas           | E-mail e senha corretos              | Redirecionamento para tela principal   | Funcional|
+| CT03| Login com senha incorreta                | E-mail correto, senha incorreta      | Exibição de mensagem de erro           | Funcional|
+| CT04| E-mail inválido no cadastro              | E-mail com formato inválido          | Exibição de erro de validação          | Funcional|
+
+### 6.2 Lançamentos Financeiros
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     | Tipo     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|----------|
+| CT05| Cadastro de lançamento                   | Nome, valor, categoria, tipo         | Lançamento adicionado à lista          | Funcional|
+| CT06| Listagem de lançamentos                  | -                                    | Exibição dos lançamentos cadastrados   | Funcional|
+| CT07| Validação de valor negativo              | Valor negativo no campo de entrada   | Exibição de erro de validação          | Funcional|
+
+### 6.3 Acompanhamento Financeiro
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     | Tipo     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|----------|
+| CT08| Visualização de saldo geral              | -                                    | Saldo exibido corretamente             | Funcional|
+| CT09| Exibição de gráficos de despesas         | Lançamentos variados                 | Gráfico gerado com dados consistentes  | Funcional|
+
+---
+
+## 7. Testes Não Funcionais
+
+### 7.1 Usabilidade
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|
+| NF01| Interface intuitiva                      | Navegação comum                      | Usuário consegue utilizar sem ajuda    |
+| NF02| Feedback visual adequado                 | Ações de clique e erro               | Exibição de mensagens e indicadores    |
+
+### 7.2 Desempenho
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|
+| NF03| Tempo de carregamento                    | Acesso inicial                       | Carregamento em menos de 3 segundos    |
+
+### 7.3 Segurança
+
+| ID  | Descrição                                | Entrada                              | Resultado Esperado                     |
+|-----|-------------------------------------------|--------------------------------------|----------------------------------------|
+| NF04| Armazenamento seguro de senhas           | Cadastro                             | Senhas criptografadas no banco         |
+| NF05| Bloqueio de acesso com login incorreto   | Várias tentativas erradas            | Bloqueio temporário da conta           |
+
+---
+
+## 8. Relatório de Resultados
+
+Cada teste será executado e terá seu resultado documentado conforme o modelo abaixo:
+
+| Caso de Teste | Resultado Esperado | Resultado Obtido | Status (Aprovado / Reprovado) | Observações |
+|---------------|--------------------|------------------|-------------------------------|-------------|
+| CT01          | Cadastro com sucesso| Cadastro ok      | Aprovado                      | -           |
+
+---
+
+## 9. Conclusão
+
+Este plano de testes visa assegurar que o sistema **Cash Wise** seja entregue com qualidade, minimizando falhas e proporcionando uma boa experiência ao usuário.

@@ -2327,23 +2327,39 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\allan\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\Luiz\\.nuget\\packages\\": {},
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\allan\\OneDrive\\Área de Trabalho\\TIADI\\src\\back\\CashWiseAPI.csproj",
       "projectName": "CashWiseAPI",
       "projectPath": "C:\\Users\\allan\\OneDrive\\Área de Trabalho\\TIADI\\src\\back\\CashWiseAPI.csproj",
       "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\allan\\OneDrive\\Área de Trabalho\\TIADI\\src\\back\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Luiz\\Desktop\\Novo repository\\2025-1-p3-tidai-planejamentofinanceiro\\src\\back\\CashWiseAPI.csproj",
+      "projectName": "CashWiseAPI",
+      "projectPath": "C:\\Users\\Luiz\\Desktop\\Novo repository\\2025-1-p3-tidai-planejamentofinanceiro\\src\\back\\CashWiseAPI.csproj",
+      "packagesPath": "C:\\Users\\Luiz\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Luiz\\Desktop\\Novo repository\\2025-1-p3-tidai-planejamentofinanceiro\\src\\back\\obj\\",
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\Luiz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2352,6 +2368,10 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+<<<<<<< HEAD
+=======
+        "C:\\Program Files\\dotnet\\library-packs": {},
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2369,7 +2389,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
+<<<<<<< HEAD
       }
+=======
+      },
+      "SdkAnalysisLevel": "9.0.100"
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
     },
     "frameworks": {
       "net6.0": {
@@ -2399,6 +2424,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+<<<<<<< HEAD
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
@@ -2417,6 +2443,8 @@
             "version": "[6.0.33, 6.0.33]"
           }
         ],
+=======
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2425,7 +2453,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> 6dcaa547b462d60c244a47cdb4f5ba009497fa61
       }
     }
   }
