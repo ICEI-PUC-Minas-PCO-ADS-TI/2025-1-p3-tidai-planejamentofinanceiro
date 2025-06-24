@@ -110,6 +110,50 @@ Atualizado em: 07/04/2025
 | Christiano        | Estrutura back-end do projeto  |  24/03/2025    | 04/04/2025 | ✔️    | 04/04/2025    |
 | Allan e Christiano        | Template padrão da aplicação  |  24/03/2025    | 04/04/2025 | ✔️    | 04/04/2025    |
 
+#### Sprint 3
+
+Atualizado em: 23/02/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+|Thiago Marques | Modelagem de Banco |  10/04/2025   | 1 semana  | ✔️    |  18/04/2025    |
+|Thiago Marques | Criação do diagrama DER e dos scripts do banco de dados   |  10/04/2025   | 1 semana | ✔️    | 19/04/2025                |
+|Luis Gustavo | Melhorias no Front-end   |  10/04/2025    | 1 semana | ✔️    | 30/04/2025  |
+|Allan Junio | Implementação do Back |  10/04/2025   | 1 semana | ✔️    | 30/04/2025 |
+|Allan Junio e Thiago Marques|  Criação dos CRUD´s  |  10/04/2025   |semanas | ✔️      |             |
+| Gabriel Henrique| Ajustes de responsividade | 10/04/2025 | 1 semanas | ✔️      |  |
+| Kauan Maia | Ajustes no Front-end |  20/04/2025 | semanas | ✔️      |       |
+| Allan Junio | Atendimento a integração com o front  |   10/04/2025      | 3 semanas  | ✔️      |     |
+| Luis Gustavo | Atualização da documentação  |   20/04/2025      | 1 semana | ✔️      |  30/04/2025   |
+
+
+
+
+#### Sprint 4
+
+Atualizado em: 23/02/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+|Thiago Marques | Teste de Software |  11/05/2025   | 1 semana  | ✔️    |  17/05/2025    |
+|Thiago Marques, Kauan Maia e Allan Junio | Ajustes na documentação  |  11/06/2025  | 1 semana | ✔️    | 11/06/2025                |
+|Luis Gustavo | Melhorias e refinamentos da aplicação   |  15/05/2025    |4 semanas | ✔️    | 10/06/2025  |
+|Allan Junio | Ajustes no Back-end  |  15/05/2025   | 4 semanas | ✔️    | 10/06/2025  |
+| Gabriel Henrique| Teste de Software| 11/06/2025 | 1 semana | ✔️      | 17/06/2025 |
+| Kauan Maia | Teste de Usabilidade  |  11/06/2025      | 1 semana | ✔️      |  17/06/2025    |
+
+
+#### Sprint 4
+
+Atualizado em: 23/02/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+|Thiago Marques, Kauan Maia e Allan Junio | Ajustes na documentação  |  18/06/2025  | 1 semana | ✔️    | 24/06/2025                |
+|Luis Gustavo | Melhorias e refinamentos da aplicação - Após a apresentação   |  18/06/2025    |4 semanas | ✔️    | 24/06/2025  |
+|Allan Junio | Apresentação do video  |  18/06/2025   | 1 semana | ✔️    | 24/06/2025  |
+|Todos | Apresentação final e encerramento do trabalho  |  18/06/2025   | 1 semana | ✔️    | 24/06/2025  |
+
 
 Legenda:
 - ✔️: terminado
