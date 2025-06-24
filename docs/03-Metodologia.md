@@ -143,7 +143,7 @@ Atualizado em: 23/02/2025
 | Kauan Maia | Teste de Usabilidade  |  11/06/2025      | 1 semana | ✔️      |  17/06/2025    |
 
 
-#### Sprint 4
+#### Sprint 5
 
 Atualizado em: 23/02/2025
 
