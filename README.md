@@ -45,4 +45,5 @@ A presente documentação descreve a especificação de um projeto de aplicaçã
 
 # Apresentação
 
-* <a href="presentation/cashWise_videoFinalEditado.mp4">Apresentação final do projeto</a>
+* <a href="presentation/">Apresentação final do projeto</a>
+https://drive.google.com/file/d/1iVPJQrPpPuRDxdHbtgYnlSyvPsyEC2je/view?usp=drive_link
