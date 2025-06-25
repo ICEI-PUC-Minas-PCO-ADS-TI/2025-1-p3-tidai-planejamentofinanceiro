@@ -176,8 +176,8 @@ Os artefatos do projeto são desenvolvidos a partir de diversas plataformas e a 
 
 | Ambiente                            | Plataforma                         | Link de acesso                         |
 |-------------------------------------|------------------------------------|----------------------------------------|
-| Repositório de código fonte         | GitHub                             | https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2025-1-p3-tidai-Grupo2/tree/main                         |
-| Documentos do projeto               | GitHub                             |https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2025-1-p3-tidai-Grupo2/tree/main                          |
+| Repositório de código fonte         | GitHub                             | https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2025-1-p3-tidai-planejamentofinanceiro/tree/main/src                         |
+| Documentos do projeto               | GitHub                             |https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2025-1-p3-tidai-planejamentofinanceiro/tree/main/docs                          |
 | Projeto de interface                | Figma                              | https://www.figma.com/design/HOKK8Z1TzB6bPkutBZjCTI/Untitled?node-id=1-2965&t=PMBLbvdI94FArAoD-0                    |
 | Projeto de interface - Userflow     | Figma                             | https://www.figma.com/proto/qX1Zd1OEn1wMz0MxEkUkeb/TIADAI-_-Templates?node-id=89-434&t=hhgH5FbL4xym4Rt3-1  
 | Gerenciamento do projeto            | GitHub Projects                    |https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2025-1-p3-tidai-Grupo2/projects?query=is%3Aopen                          |
